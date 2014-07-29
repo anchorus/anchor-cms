@@ -2,9 +2,9 @@
 
 <section class="content">
 	<article>
-		<h1>Информация о базе данных</h1>
+		<h1>Соединение с базой данных</h1>
 
-		<p>Для начала нам нужна база данных. Там Anchor хранит всё своё содержимое. Если вы не знаете данные для соединения с БД, свяжитесь со своим хостинг-провайдером</p>
+		<p>Для начала нам нужна база данных. Там Anchor хранит всё своё содержимое. Если вы не знаете данные для соединения с БД, свяжитесь со своим хостинг-провайдером.</p>
 	</article>
 
 	<form method="post" action="<?php echo uri_to('database'); ?>" autocomplete="off">
@@ -26,17 +26,17 @@
 			</p>
 
 			<p>
-				<label for="user">Логин БД</label>
+				<label for="user">Пользователь БД</label>
 				<input id="user" name="user" value="<?php echo Input::previous('user', 'root'); ?>">
 
-				<i>Пользователь БД, обычно <b>root</b>.</i>
+				<i>Логин пользователя, обычно <b>root</b>.</i>
 			</p>
 
 			<p>
-				<label for="pass">Пароль БД</label>
+				<label for="pass">Пароль</label>
 				<input id="pass" name="pass" value="<?php echo Input::previous('pass'); ?>">
 
-				<i>Оставьте пустым, если пароля нет.</i>
+				<i>Оставьте пустым, если пароль не задан.</i>
 			</p>
 
 			<p>
@@ -50,12 +50,12 @@
 				<label for="prefix">Префикс</label>
 				<input id="prefix" name="prefix" value="<?php echo Input::previous('prefix', 'anchor_'); ?>">
 
-				<i>Префикс у таблиц в БД.</i>
+				<i>Префикс у таблиц в базе данных.</i>
 			</p>
 
 			<p>
 				<label for="collation">Кодировка</label>
-				<select id="collation" name="collation">
+				<select id="collation" class="chosen-select" name="collation">
 					<?php foreach($collations as $code => $collation): ?>
 					<?php $selected = ($code == Input::previous('collation', 'utf8_general_ci')) ? ' selected' : ''; ?>
 					<option value="<?php echo $code; ?>" <?php echo $selected; ?>>
@@ -70,7 +70,7 @@
 
 		<section class="options">
 			<a href="<?php echo uri_to('start'); ?>" class="btn quiet">&laquo; Назад</a>
-			<button type="submit" class="btn">Вперёд &raquo;</button>
+			<button type="submit" class="btn">Вперед &raquo;</button>
 		</section>
 	</form>
 </section>

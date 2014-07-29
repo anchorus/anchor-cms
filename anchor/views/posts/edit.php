@@ -45,10 +45,15 @@
 				<em><?php echo __('posts.slug_explain'); ?></em>
 			</p>
 			<p>
+				<label><?php echo __('posts.time'); ?>:</label>
+				<?php echo Form::text('created', Input::previous('created', $article->created)); ?>
+				<em><?php echo __('posts.time_explain'); ?></em>
+			</p>
+			<p>
 				<label for="description"><?php echo __('posts.description'); ?>:</label>
 				<?php echo Form::textarea('description', Input::previous('description', $article->description)); ?>
 				<em><?php echo __('posts.description_explain'); ?></em>
-			</p
+			</p>
 			<p>
 				<label for="status"><?php echo __('posts.status'); ?>:</label>
 				<?php echo Form::select('status', $statuses, Input::previous('status', $article->status)); ?>
@@ -84,9 +89,7 @@
 	</fieldset>
 </form>
 
-<script src="<?php echo asset('anchor/views/assets/js/slug.js'); ?>"></script>
 <script src="<?php echo asset('anchor/views/assets/js/dragdrop.js'); ?>"></script>
-<!--<script src="<?php echo asset('anchor/views/assets/js/focus-mode.js'); ?>"></script>-->
 <script src="<?php echo asset('anchor/views/assets/js/upload-fields.js'); ?>"></script>
 <script src="<?php echo asset('anchor/views/assets/js/text-resize.js'); ?>"></script>
 <script src="<?php echo asset('anchor/views/assets/js/editor.js'); ?>"></script>

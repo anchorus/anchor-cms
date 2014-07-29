@@ -11,6 +11,10 @@ $posts_page = Registry::get('posts_page');
  */
 if($home_page->id != $posts_page->id) {
 	Route::get(array('/', $home_page->slug), function() use($home_page) {
+    if($home_page->redirect) {
+      return Response::redirect($home_page->redirect);
+    }
+
 		Registry::set('page', $home_page);
 
 		return new Template('page');
@@ -83,6 +87,17 @@ Route::get(array('category/(:any)', 'category/(:any)/(:num)'), function($slug = 
 });
 
 /**
+ * Redirect by article ID
+ */
+Route::get('(:num)', function($id) use($posts_page) {
+	if( ! $post = Post::id($id)) {
+		return Response::create(new Template('404'), 404);
+	}
+
+	return Response::redirect($posts_page->slug . '/' . $post->data['slug']);
+});
+
+/**
  * View article
  */
 Route::get($posts_page->slug . '/(:any)', function($slug) use($posts_page) {
@@ -105,7 +120,11 @@ Route::post($posts_page->slug . '/(:any)', function($slug) use($posts_page) {
 		return Response::create(new Template('404'), 404);
 	}
 
-	$input = Input::get(array('name', 'email', 'text'));
+	$input = filter_var_array(Input::get(array('name', 'email', 'text')), array(
+		'name' => FILTER_SANITIZE_STRING,
+		'email' => FILTER_SANITIZE_EMAIL,
+		'text' => FILTER_SANITIZE_SPECIAL_CHARS
+	));
 
 	$validator = new Validator($input);
 
@@ -154,7 +173,7 @@ Route::get(array('rss', 'feeds/rss'), function() {
 	$uri = 'http://' . $_SERVER['HTTP_HOST'];
 	$rss = new Rss(Config::meta('sitename'), Config::meta('description'), $uri, Config::app('language'));
 
-	$query = Post::where('status', '=', 'published');
+	$query = Post::where('status', '=', 'published')->sort(Base::table('posts.created'), 'desc');
 
 	foreach($query->get() as $article) {
 		$rss->item(
@@ -176,7 +195,7 @@ Route::get(array('rss', 'feeds/rss'), function() {
 Route::get('feeds/json', function() {
 	$json = Json::encode(array(
 		'meta' => Config::get('meta'),
-		'posts' => Post::where('status', '=', 'published')->get()
+		'posts' => Post::where('status', '=', 'published')->sort(Base::table('posts.created'), 'desc')->get()
 	));
 
 	return Response::create($json, 200, array('content-type' => 'application/json'));

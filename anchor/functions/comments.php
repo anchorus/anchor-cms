@@ -1,7 +1,7 @@
 <?php
 
 /**
-	Theme functions for comments
+*	Theme functions for comments
 */
 
 function has_comments() {
@@ -52,7 +52,7 @@ function comment_id() {
 
 function comment_time() {
 	if($time = Registry::prop('comment', 'date')) {
-		return strtotime($time);
+		return Date::format($time,'U');
 	}
 }
 
@@ -99,6 +99,6 @@ function comment_form_input_text($extra = '') {
 	return '<textarea name="text" id="text" ' . $extra . '>' . Input::previous('text') . '</textarea>';
 }
 
-function comment_form_button($text = 'Отправить комментарий', $extra = '') {
+function comment_form_button($text = 'Отправить', $extra = '') {
 	return '<button class="btn" type="submit" ' . $extra . '>' . $text . '</button>';
 }

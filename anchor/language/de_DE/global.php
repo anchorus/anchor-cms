@@ -11,67 +11,67 @@ return array(
 	// words
 	'save' => 'Speichern',
 	'delete' => 'Löschen',
-	'update' => 'Aktualisieren',
+	'update' => 'Ändern',
 	'edit' => 'Bearbeiten',
-	'editing' => 'Bearbeitung',
+	'editing' => 'Bearbeiten',
 	'create' => 'Erstellen',
 	'created' => 'Erstellt',
-	'submit' => 'Abschicken',
+	'submit' => 'Absenden',
 	'close' => 'Schließen',
 	'status' => 'Status',
 	'manage' => 'Verwalten',
 	'reset' => 'Zurücksetzen',
-	'all' => 'Alles',
+	'all' => 'Alle',
 
 	// pagination
 	'next' => 'Weiter',
 	'previous' => 'Zurück',
-	'first' => 'Anfang',
-	'last' => 'Ende',
+	'first' => 'Erster',
+	'last' => 'Letzter',
 
 	// statuses
 	'draft' => 'Entwurf',
-	'archived' => 'Archiv',
+	'archived' => 'Archiviert',
 	'published' => 'Veröffentlicht',
-	'pending' => 'Bevorstehend',
-	'approved' => 'Freigegeben',
+	'pending' => 'Ausstehend',
+	'approved' => 'Genehmigt',
 	'spam' => 'Spam',
 
 	'inactive' => 'Inaktiv',
 	'active' => 'Aktiv',
 
 	// roles
-	'administrator' => 'Administrator',
-	'editor' => 'Bearbeiter',
+	'administrator' => 'Admin',
+	'editor' => 'Editor',
 	'user' => 'Benutzer',
 
-	'log_in' => 'Log in',
-	'login' => 'Login',
-	'log_out' => 'Log out',
-	'logout' => 'Logout',
+	'log_in' => 'Einloggen',
+	'login' => 'Einloggen',
+	'log_out' => 'Ausloggen',
+	'logout' => 'Ausloggen',
 
 	// pharses
-	'visit_your_site' => 'Homepage',
+	'visit_your_site' => 'Deine Seite besuchen',
 	'powered_by_anchor' => 'Powered by Anchor, version %s',
 	'make_blogging_beautiful' => 'Make blogging beautiful.',
 
 	// intro
-	'welcome_to_anchor' => 'Willkommen zu Anchor',
-	'welcome_to_anchor_lets_go' => 'Willkommen zu Anchor. Lasst uns beginnen.',
-	'run_the_installer' => 'Installation starten',
+	'welcome_to_anchor' => 'Willkommen bei Anchor',
+	'welcome_to_anchor_lets_go' => 'Willkommen bei Anchor. Lass uns loslegen.',
+	'run_the_installer' => 'Installer ausführen',
 
 	// upgrade
-	'upgrade' => 'Aktualisierung',
-	'good_news' => 'Gute Nachricht!',
-	'new_version_available' => 'Es ist eine neue Version von Anchor verfügbar.',
-	'download_now' => 'Jetzt Herunterladen',
-	'upgrade_later' => 'Später Aktualisieren',
+	'upgrade' => 'Upgrade',
+	'good_news' => 'Großartige Neuigkeiten!',
+	'new_version_available' => 'Eine neue Version von anchor ist verfügbar.',
+	'download_now' => 'Jetzt herunterladen',
+	'upgrade_later' => 'Später upgraden',
 
 	// debug profiler
-	'profile' => 'Profil',
-	'profile_memory_usage' => 'Speicherplatz in Benutzung',
+	'profile' => 'Profile',
+	'profile_memory_usage' => 'Gesamter Speicherverbrauch',
 
 	// messages
-	'confirm_delete' => 'Sind Sie sicher dies zu Löschen? Das Löschen kann nicht rückgängig gemacht werden!'
+	'confirm_delete' => 'Bist du sicher, dass du löschen willst? Das kann nicht rückgängig gemacht werden!'
 
 );

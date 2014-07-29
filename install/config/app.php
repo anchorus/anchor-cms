@@ -5,6 +5,6 @@ return array(
 	'index' => 'index.php?route=',
 	'timezone' => 'UTC',
 	'key' => hash('md5', 'Anchor Installer ' . VERSION),
-	'language' => 'en_GB',
+	'language' => 'ru_RU',
 	'encoding' => 'UTF-8'
 );

@@ -4,13 +4,13 @@ return array(
 
 	'pages' => 'Страницы',
 
-	'create_page' => 'Создать новую',
-	'nopages_desc' => 'Еще нет ни одной страницы.',
+	'create_page' => 'Добавить страницу',
+	'nopages_desc' => 'Страниц нет',
 	'redirect' => 'URL',
 
-	// form fields
-	'redirect_url' => 'URL перенаправления',
-	'redirect_missing' => 'Пожалуйста введите Url',
+	// поля формы
+	'redirect_url' => 'URL переадресации',
+	'redirect_missing' => 'Пожалуйста введите URL',
 
 	'title' => 'Название страницы',
 	'title_explain' => '',
@@ -19,27 +19,27 @@ return array(
 	'content' => 'Содержимое',
 	'content_explain' => 'Содержимое страницы. Используйте Markdown.',
 
-	'show_in_menu' => 'Показывать в меню',
+	'show_in_menu' => 'Добавить в меню',
 	'show_in_menu_explain' => '',
 
 	'name' => 'Имя',
-	'name_explain' => '',
+	'name_explain' => 'Используется в меню',
 
-	'slug' => 'Адрес',
-	'slug_explain' => 'Адрес может содержать только латинские символы',
+	'slug' => 'URL страницы',
+	'slug_explain' => 'Состоит только из латинских символов (например <code>doge</code>)',
 	'slug_missing' => 'Пожалуйста введите адрес',
 	'slug_duplicate' => 'Адрес уже используется',
 	'slug_invalid' => 'Адрес должен содержать буквы',
 
-	'status' => 'Статус',
+	'status' => 'Видимость',
 	'status_explain' => '',
 
 	'parent' => 'Родитель',
 	'parent_explain' => '',
 
-	// messages
-	'updated' => 'Ваша страница была обновлена.',
-	'created' => 'Ваша страница была добавлена.',
-	'deleted' => 'Ваша страница была удалена.'
+	// сообщения
+	'updated' => 'Страница была обновлена',
+	'created' => 'Новая страница была добавлена',
+	'deleted' => 'Страница была удалена'
 
 );

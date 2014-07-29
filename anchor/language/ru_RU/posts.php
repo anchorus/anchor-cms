@@ -4,30 +4,34 @@ return array(
 
 	'posts' => 'Записи',
 
-	'create_post' => 'Написать запись',
-	'noposts_desc' => 'У вас нет еще записей!',
+	'create_post' => 'Добавить запись',
+	'noposts_desc' => 'Записей нет',
 
 	// поля в форме
 	'title' => 'Заголовок',
 	'title_explain' => '',
-	'title_missing' => 'Пожалуйста введите заголовок',
+	'title_missing' => 'Введите заголовок записи',
 
 	'content' => 'Содержимое записи',
 	'content_explain' => 'Просто пишите.',
 
-	'slug' => 'Адрес',
-	'slug_explain' => 'Адрес может содержать только латинские символы',
-	'slug_missing' => 'Пожалуйста введите адрес',
+	'slug' => 'URL записи',
+	'slug_explain' => 'Состоит только из латинских символов (например <code>wow</code>)',
+	'slug_missing' => 'Введите URL адрес',
 	'slug_duplicate' => 'Адрес уже используется',
 	'slug_invalid' => 'Адрес должен содержать буквы',
+
+	'time' => 'Дата (в GMT)',
+	'time_explain' => 'Шаблон: YYYY-MM-DD HH:MM:SS',
+	'time_invalid' => 'Неправильная дата',
 
 	'description' => 'Описание',
 	'description_explain' => '',
 
-	'status' => 'Статус',
+	'status' => 'Видимость',
 	'status_explain' => '',
 
-	'category' => 'Категория',
+	'category' => 'Рубрика',
 	'category_explain' => '',
 
 	'allow_comments' => 'Разрешить комментарии',
@@ -39,9 +43,9 @@ return array(
 	'custom_js' => 'JS',
 	'custom_js_explain' => '',
 
-	// уведомления
-	'updated' => 'Ваша запись была обновлена',
-	'created' => 'Ваша запись была добавлена',
-	'deleted' => 'Ваша запись была удалена'
+	// сообщения
+	'updated' => 'Запись была обновлена',
+	'created' => 'Новая запись была добавлена',
+	'deleted' => 'Запись была удалена'
 
 );

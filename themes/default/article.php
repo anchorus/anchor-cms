@@ -9,7 +9,7 @@
 
 			<section class="footnote">
 				<!-- Unfortunately, CSS means everything's got to be inline. -->
-				<p>Это моя <?php echo numeral(article_id()); ?> запись. Здесь <?php echo count_words(article_markdown()); ?> слов<?php if(comments_open()): ?>, и <?php echo total_comments() . pluralise(total_comments(), ' комментариев'); ?> сейчас.<?php endif; ?> <?php echo article_custom_field('attribution'); ?></p>
+				<p>Это моя <?php echo numeral(total_articles()); ?> запись. Здесь <?php echo count_words(article_markdown()); ?> слов<?php if(comments_open()): ?>, и <?php echo total_comments() . pluralise(total_comments(), ' комментариев'); ?> сейчас.<?php endif; ?> <?php echo article_custom_field('attribution'); ?></p>
 			</section>
 		</section>
 
@@ -43,8 +43,8 @@
 				</p>
 
 				<p class="email">
-					<label for="email">Ваш email адрес:</label>
-					<?php echo comment_form_input_email('placeholder="Ваш email (не покажем)"'); ?>
+					<label for="email">Ваш mail адрес:</label>
+					<?php echo comment_form_input_email('placeholder="Ваш email (не будет опубликован)"'); ?>
 				</p>
 
 				<p class="textarea">
@@ -53,7 +53,7 @@
 				</p>
 
 				<p class="submit">
-					<?php echo comment_form_button('Отправить комментарий'); ?>
+					<?php echo comment_form_button(); ?>
 				</p>
 			</form>
 

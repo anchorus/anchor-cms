@@ -8,9 +8,9 @@
 	                    <li><a href="<?php echo twitter_url(); ?>">@<?php echo twitter_account(); ?></a></li>
 	                    <?php endif; ?>
 
-	                    <li><a href="<?php echo base_url('admin'); ?>" title="Управление сайтом!">Управление</a></li>
+	                    <li><a href="<?php echo base_url('admin'); ?>" title="Администрировать сайт!">Управление</a></li>
 
-	                    <li><a href="/" title="Вернуться на сайт.">Главная</a></li>
+	                    <li><a href="<?php echo base_url(); ?>" title="Вернуться на главную.">Домой</a></li>
 	                </ul>
 	            </footer>
 

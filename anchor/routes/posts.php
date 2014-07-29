@@ -1,6 +1,6 @@
 <?php
 
-Route::collection(array('before' => 'auth'), function() {
+Route::collection(array('before' => 'auth,csrf'), function() {
 
 	/*
 		List all posts and paginate through them
@@ -90,6 +90,9 @@ Route::collection(array('before' => 'auth'), function() {
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
 
+		// encode title
+		$input['title'] = e($input['title'], ENT_COMPAT);
+
 		$validator = new Validator($input);
 
 		$validator->add('duplicate', function($str) use($id) {
@@ -103,6 +106,9 @@ Route::collection(array('before' => 'auth'), function() {
 			->is_max(3, __('posts.slug_missing'))
 			->is_duplicate(__('posts.slug_duplicate'))
 			->not_regex('#^[0-9_-]+$#', __('posts.slug_invalid'));
+
+		$validator->check('created')
+			->is_regex('#^[0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}\:[0-9]{2}\:[0-9]{2}$#', __('posts.time_invalid'));
 
 		if($errors = $validator->errors()) {
 			Input::flash();
@@ -172,6 +178,9 @@ Route::collection(array('before' => 'auth'), function() {
 
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
+
+		// encode title
+		$input['title'] = e($input['title'], ENT_COMPAT);
 
 		$validator = new Validator($input);
 

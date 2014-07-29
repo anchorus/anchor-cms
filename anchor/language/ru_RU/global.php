@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Global is to replace common.php
+ * Global это замена common.php
  *
  * This global file will provide the majority of the translations in anchor
  * to remove duplicate translations in section specific language files.
@@ -13,7 +13,7 @@ return array(
 	'delete' => 'Удалить',
 	'update' => 'Обновить',
 	'edit' => 'Изменить',
-	'editing' => 'Редактирование',
+	'editing' => 'Изменение',
 	'create' => 'Создать',
 	'created' => 'Создано',
 	'submit' => 'Отправить',
@@ -23,7 +23,7 @@ return array(
 	'reset' => 'Сброс',
 	'all' => 'Все',
 
-	// пагинация
+	// постраничная навигация
 	'next' => 'Вперед',
 	'previous' => 'Назад',
 	'first' => 'Первый',
@@ -31,10 +31,10 @@ return array(
 
 	// статусы
 	'draft' => 'Черновик',
-	'archived' => 'Архив',
-	'published' => 'Публикация',
-	'pending' => 'В ожидании',
-	'approved' => 'Проверено',
+	'archived' => 'В архиве',
+	'published' => 'Опубликовано',
+	'pending' => 'Не проверен',
+	'approved' => 'Опубликован',
 	'spam' => 'Спам',
 
 	'inactive' => 'Неактивный',
@@ -56,14 +56,30 @@ return array(
     // группы пользователей
     'administrator' => 'Администратор',
     'editor' => 'Редактор',
-    'user' => 'Пользователь',
+    'user' => 'Читатель',
     
      // фразы
-	'visit_your_site' => 'Сайт',
-	'powered_by_anchor' => 'Работает на Anchor, версии %s',
-	'make_blogging_beautiful' => 'Вместе сделаем мир лучше.',
+	'visit_your_site' => 'На сайт',
+	'powered_by_anchor' => 'Работает на Anchor, версия %s',
+	'make_blogging_beautiful' => 'Вместе мы сделаем мир лучше.',
 
-	// уведомления
-	'confirm_delete' => 'Вы действительно хотите это удалить? '
+	// введение
+	'welcome_to_anchor' => 'Добро пожаловать в Anchor',
+	'welcome_to_anchor_lets_go' => 'Anchor приветствует тебя. Поехали.',
+	'run_the_installer' => 'Перейти к установке',
+
+	// обновление
+	'upgrade' => 'Обновление',
+	'good_news' => 'Прекрасные новости!',
+	'new_version_available' => 'Доступна новая версия Anchor.',
+	'download_now' => 'Скачать сейчас',
+	'upgrade_later' => 'Обновиться позже',
+
+	// отладка
+	'profile' => 'Профиль',
+	'profile_memory_usage' => 'Использовано памяти',
+
+	// сообщения
+	'confirm_delete' => 'Вы уверены, что хотите это удалить? '
 
 );

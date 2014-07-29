@@ -5,24 +5,24 @@ return array(
 	'category' => 'Kategorie',
 	'categories' => 'Kategorien',
 
-	'create_category' => 'Neue Kategorie erstellen',
-	'edit_category' => 'Bearbeiten von &ldquo;%s&rdquo;',
+	'create_category' => 'Erstelle eine neue Kategorie',
+	'edit_category' => 'Bearbeite &ldquo;%s&rdquo;',
 
 	// form fields
 	'title' => 'Titel',
-	'title_explain' => 'Der Titel deiner Kategorie.',
-	'title_missing' => 'Bitte einen Titel eingeben.',
+	'title_explain' => 'Dein Kategorie Name.',
+	'title_missing' => 'Bitte gib einen Titel ein',
 
-	'slug' => 'Schlagwort',
-	'slug_explain' => 'Das Schlagwort für deine Kategorie.',
+	'slug' => 'Slug',
+	'slug_explain' => 'Der slug für deine Kategorie.',
 
 	'description' => 'Beschreibung',
-	'description_explain' => 'Die Beschreibung deiner Kategorie.',
+	'description_explain' => 'Beschreibung deiner Kategorie.',
 
 	// messages
 	'created' => 'Deine neue Kategorie wurde hinzugefügt.',
 	'updated' => 'Deine Kategorie wurde aktualisiert.',
 	'deleted' => 'Deine Kategorie wurde gelöscht.',
-	'delete_error' => 'Du brauchst mindestens eine Kategorie.',
+	'delete_error' => 'Du musst mindestens eine Kategorie haben.',
 
 );

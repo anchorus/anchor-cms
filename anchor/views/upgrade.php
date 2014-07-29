@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title><?php echo __('global.upgrade'); ?></title>
+		<title>Добро пожаловать в Anchor</title>
 
 		<style>
 			body {
@@ -43,11 +43,11 @@
 		<div>
 			<img src="<?php echo $base; ?>/anchor/views/assets/img/logo.png" alt="Anchor logo">
 
-			<h1><?php echo __('global.good_news'); ?></h1>
-			<p><?php echo __('global.new_version_available'); ?></p>
+			<h1>Отличные новости!</h1>
+			<p>Доступна новая версия Anchor.</p>
 
-			<a href="<?php echo $url; ?>"><?php echo __('global.download_now'); ?></a>
-			<a href="<?php echo $base; ?>/admin"><?php echo __('global.upgrade_later'); ?></a>
+			<a href="<?php echo $url; ?>">Скачать сейчас</a>
+			<a href="<?php echo $base; ?>/admin">Обновить позже</a>
 		</div>
 	</body>
 </html>

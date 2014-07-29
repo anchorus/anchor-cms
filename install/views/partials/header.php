@@ -6,18 +6,19 @@
 		<meta name="robots" content="noindex, nofollow">
 
 		<link rel="stylesheet" href="<?php echo asset('views/assets/css/install.css'); ?>">
+		<link rel="stylesheet" href="<?php echo asset('views/assets/css/chosen.css'); ?>">
 	</head>
 	<body>
 
-    	<nav>
+		<nav>
 			<img src="<?php echo asset('views/assets/img/logo.png'); ?>">
 
 			<ul>
 				<li class="start database metadata account complete">Язык и время</li>
-				<li class="database metadata account complete">База данных</li>
+				<li class="database metadata account complete">Соединение с БД</li>
 				<li class="metadata account complete">Настройки сайта</li>
 				<li class="account complete">Ваш профиль</li>
-				<li class="complete">Всё готово!</li>
+				<li class="complete">Все готово!</li>
 			</ul>
 		</nav>
 

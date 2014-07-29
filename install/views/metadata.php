@@ -4,7 +4,7 @@
 	<article>
 		<h1>Настройки сайта</h1>
 
-		<p>Для того, чтобы сделать ваш блог на Anchor уникальнее, рекомендуем придумать название и описание, а также выбрать шаблон оформления. Однако, все настройки можно будет изменить позже.</p>
+		<p>Для того, чтобы сделать блог на Anchor уникальным, рекомендуем вам придумать название и описание, а также выбрать шаблон оформления. Однако, все настройки можно будет изменить позже.</p>
 	</article>
 
 	<form method="post" action="<?php echo Uri::to('metadata'); ?>" autocomplete="off">
@@ -12,23 +12,23 @@
 
 		<fieldset>
 			<p>
-				<label for="site_name">Название сайта</label>
-				<i>Как звать ваш блог?.</i>
+				<label for="site_name">Название блога</label>
+				<i>Как будут звать ваш блог?.</i>
 
-				<input id="site_name" name="site_name" value="<?php echo Input::previous('site_name', 'Мой первый блог на Anchor'); ?>">
+				<input id="site_name" name="site_name" value="<?php echo Input::previous('site_name', 'Мой первый блог'); ?>">
 			</p>
 
 			<p>
-				<label for="site_description">Описание сайта</label>
-				<i>Немного о себе или о своём блоге.</i>
+				<label for="site_description">Описание блога</label>
+				<i>Несколько бит о вашем блоге.</i>
 
 				<textarea id="site_description" name="site_description"><?php echo Input::previous('site_description',
-					'Это не просто блог. Это блог на Anchor.'); ?></textarea>
+					'Это не простой блог. Это блог на Anchor.'); ?></textarea>
 			</p>
 
 			<p>
 				<label for="site_path">Патч сайта</label>
-				<i>Папка с Anchor.</i>
+				<i>Папка с Anchor. Смените, если не работает.</i>
 				<input id="site_path" name="site_path" value="<?php echo Input::previous('site_path', $site_path); ?>">
 			</p>
 
@@ -47,7 +47,7 @@
 			<?php endif; ?>
 
 			<p>
-				<label for="rewrite">Простые Url'ы</label>
+				<label for="rewrite">Красивые Url'ы</label>
 				<i>Url переадресация</i>
 
 			<?php if(mod_rewrite()): ?>
@@ -73,7 +73,7 @@
 
 		<section class="options">
 			<a href="<?php echo uri_to('database'); ?>" class="btn quiet">&laquo; Назад</a>
-			<button type="submit" class="btn">Вперёд &raquo;</button>
+			<button type="submit" class="btn">Вперед &raquo;</button>
 		</section>
 	</form>
 </section>

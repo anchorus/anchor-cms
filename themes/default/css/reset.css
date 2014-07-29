@@ -1,5 +1,5 @@
 /**
- *   Anchor, по-умолчанию
+ *   Anchor, default reset
  */
 * {
 	margin: 0;
@@ -7,16 +7,17 @@
 	
 	-webkit-font-smoothing: antialiased;
 	
+	/* Don't count padding and borders towards widths */ 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
 /**
- *   Типография
+ *   Typographic reset
  */
 body {
-	/* Используйте serif шрифт для хорошой читабельности, но не Times */
+	/* Use a serif font for nice readability, but not Times */
 	font: 17px/26px Skolar, Tisa, "Chaparral Pro", Merriweather, Georgia, serif;
 }
 
@@ -55,7 +56,7 @@ a {
 	}
 
 /**
- *   Слой по-умолчанию
+ *   Layout reset
  */
 .wrap {
 	min-width: 280px;
@@ -66,7 +67,7 @@ a {
 }
 
 /**
- *   Цвета по-умолчанию
+ *   Default colours
  */
 body, .items > li:first-child {
 	color: #6e7886;
@@ -114,7 +115,7 @@ input, textarea {
 	}
 
 /**
- *   Анимации
+ *   Transitions and animations
  */
 a, a img {
 	-webkit-transition: opacity .2s, color .2s;

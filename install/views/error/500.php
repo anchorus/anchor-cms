@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>500 - Internal Server Error</title>
+		<title>500 - Ошибка соединения с сервером</title>
 
 		<style type="text/css">
 			body {
@@ -42,6 +42,6 @@
 	<body>
 		<h1>Internal Server Error</h1>
 
-		<p>Произошла ошибка при обработке вашего запроса.</p>
+		<p>Произошла ошибка при отправке вашего запроса.</p>
 	</body>
 </html>

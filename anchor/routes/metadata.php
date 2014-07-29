@@ -1,6 +1,6 @@
 <?php
 
-Route::collection(array('before' => 'auth'), function() {
+Route::collection(array('before' => 'auth,csrf'), function() {
 
 	/*
 		List Metadata
@@ -45,8 +45,8 @@ Route::collection(array('before' => 'auth'), function() {
 		}
 
 		// convert double quotes so we dont break html
-		$input['sitename'] = htmlspecialchars($input['sitename'], ENT_COMPAT, Config::app('encoding'), false);
-		$input['description'] = htmlspecialchars($input['description'], ENT_COMPAT, Config::app('encoding'), false);
+		$input['sitename'] = e($input['sitename'], ENT_COMPAT);
+		$input['description'] = e($input['description'], ENT_COMPAT);
 
 		foreach($input as $key => $value) {
 			Query::table(Base::table('meta'))->where('key', '=', $key)->update(array('value' => $value));

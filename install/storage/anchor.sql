@@ -108,7 +108,7 @@ CREATE TABLE `{{prefix}}users` (
 ) ENGINE=InnoDB CHARSET={{charset}};
 
 INSERT INTO `{{prefix}}categories` (`title`, `slug`, `description`) VALUES
-('Без категории', 'uncategorised', 'Здесь нет категории.');
+('Без рубрики', 'uncategorised', 'Нет здесь рубрики.');
 
 INSERT INTO `{{prefix}}meta` (`key`, `value`) VALUES
 ('auto_published_comments', '0'),
@@ -120,7 +120,7 @@ INSERT INTO `{{prefix}}meta` (`key`, `value`) VALUES
 ('posts_per_page',  '6');
 
 INSERT INTO `{{prefix}}pages` (`slug`, `name`, `title`, `content`, `status`, `redirect`, `show_in_menu`, `menu_order`) VALUES
-('posts', 'Записи', 'Мои записи и мысли', 'Добро пожаловать!', 'published', '', '1', '0');
+('posts', 'Записи', 'Мои записи и мысли', 'Привет!', 'published', '', '1', '0');
 
 INSERT INTO `{{prefix}}posts` (`title`, `slug`, `description`, `html`, `css`, `js`, `created`, `author`, `category`, `status`, `comments`) VALUES
-('Привет Мир', 'hello-world', 'Это первая запись.', 'Привет Мир!\r\n\r\nЭто первая запись.', '', '', '{{now}}', '1', '1', 'published', '0');
+('Привет мир', 'hello-world', 'Это первая запись.', 'Привет!\r\n\r\nЭто просто первая запись в блоге.', '', '', '{{now}}', '1', '1', 'published', '0');

@@ -2,24 +2,28 @@
 
 return array(
 
-	'posts' => 'Blog',
+	'posts' => 'Einträge',
 
-	'create_post' => 'Neuen Artikel erstellen',
-	'noposts_desc' => 'Es sind keine Artikel vorhanden!',
+	'create_post' => 'Neuen Eintrag erstellen',
+	'noposts_desc' => 'Du hast noch keine Einträge!',
 
 	// form fields
-	'title' => 'Titel des Artikels',
+	'title' => 'Titel des Eintrags',
 	'title_explain' => '',
-	'title_missing' => 'Bitte gib ein Titel an',
+	'title_missing' => 'Bitte einen Titel eingeben',
 
-	'content' => 'Inhalt des Artikel',
-	'content_explain' => 'Einfach schreiben.',
+	'content' => 'Inhalt des Eintrags',
+	'content_explain' => 'Schreib einfach.',
 
-	'slug' => 'Schlagwort',
-	'slug_explain' => 'Schlagwörter um deinen Artikel zu identifizieren, Schlagwörter können nur aus ASCII-Zeichen bestehen',
-	'slug_missing' => 'Bitte Schlagwörter eingeben, Schlagwörter können nur aus ASCII-Zeichen bestehen',
-	'slug_duplicate' => 'Schlagwort existiert bereits',
-	'slug_invalid' => 'Ein Schlagwort besteht aus Buchstaben',
+	'slug' => 'Slug',
+	'slug_explain' => 'Slug uri um deine Seite anzuzeigen; sollte nur ascii Zeichen enthalten',
+	'slug_missing' => 'Bitte gib eine slug uri an: Slugs dürfen nur ascii Zeichen enthalten',
+	'slug_duplicate' => 'Slug existiert schon',
+	'slug_invalid' => 'Slug muss Buchstaben enthalten',
+
+	'time' => 'Veröffentlicht am (GMT)',
+	'time_explain' => 'Schema: YYYY-MM-DD HH:MM:SS',
+	'time_invalid' => 'Falsches Schema',
 
 	'description' => 'Beschreibung',
 	'description_explain' => '',
@@ -33,15 +37,15 @@ return array(
 	'allow_comments' => 'Kommentare erlauben',
 	'allow_comments_explain' => '',
 
-	'custom_css' => 'Custom CSS',
+	'custom_css' => 'Benutzerdefiniertes CSS',
 	'custom_css_explain' => '',
 
-	'custom_js' => 'Custom JS',
+	'custom_js' => 'Benutzerdefiniertes JS',
 	'custom_js_explain' => '',
 
 	// messages
-	'updated' => 'Dein Artikel wurde aktualisiert.',
-	'created' => 'Dein Artikel wurde erstellt',
-	'deleted' => 'Dein Artikel wurde gelöscht'
+	'updated' => 'Dein Eintrag wurde aktualisiert',
+	'created' => 'Dein Eintrag wurde erstellt',
+	'deleted' => 'Dein Eintrag wurde gelöscht'
 
 );

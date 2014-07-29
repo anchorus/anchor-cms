@@ -93,8 +93,8 @@ class Installer {
 			'username' => $account['username'],
 			'password' => Hash::make($account['password']),
 			'email' => $account['email'],
-			'real_name' => 'Administrator',
-			'bio' => 'The bouse',
+			'real_name' => 'Администратор',
+			'bio' => 'Босс',
 			'status' => 'active',
 			'role' => 'administrator'
 		));

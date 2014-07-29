@@ -25,7 +25,7 @@
 	<?php endif; ?>
 
 <?php else: ?>
-	<p class="wrap">К сожалению, мы ничего не нашли по запросу &ldquo;<?php echo search_term(); ?>&rdquo;. Может что-то неправильно?</p>
+	<p class="wrap">К сожалению, поиски по запросу &ldquo;<?php echo search_term(); ?>&rdquo; ничего не дали. Все правильно?</p>
 <?php endif; ?>
 
 <?php theme_include('footer'); ?>

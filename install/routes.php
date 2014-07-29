@@ -28,10 +28,10 @@ Route::post('start', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($i18n);
 
 	$validator->check('language')
-		->is_max(2, 'Пожалуйста выберите язык');
+		->is_max(2, 'Выберите язык');
 
 	$validator->check('timezone')
-		->is_max(2, 'Пожалуйста выберите временную зону');
+		->is_max(2, 'Выберите часовой пояс');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -52,19 +52,19 @@ Route::post('start', array('before' => 'check', 'main' => function() {
 Route::get('database', array('before' => 'check', 'main' => function() {
 	// check we have a selected language
 	if( ! Session::get('install.i18n')) {
-		Notify::error('Пожалуйста выберите язык');
+		Notify::error('Выберите язык');
 
 		return Response::redirect('start');
 	}
 
 	$vars['messages'] = Notify::read();
 	$vars['collations'] = array(
-		'utf8_bin' => 'Unicode (мультиязычный), Binary',
+		'utf8_bin' => 'Unicode (multilingual), Binary',
 		'utf8_czech_ci' => 'Czech, case-insensitive',
 		'utf8_danish_ci' => 'Danish, case-insensitive',
 		'utf8_esperanto_ci' => 'Esperanto, case-insensitive',
 		'utf8_estonian_ci' => 'Estonian, case-insensitive',
-		'utf8_general_ci' => 'Unicode (мультиязычный), case-insensitive',
+		'utf8_general_ci' => 'Unicode (multilingual), case-insensitive',
 		'utf8_hungarian_ci' => 'Hungarian, case-insensitive',
 		'utf8_icelandic_ci' => 'Icelandic, case-insensitive',
 		'utf8_latvian_ci' => 'Latvian, case-insensitive',
@@ -79,7 +79,7 @@ Route::get('database', array('before' => 'check', 'main' => function() {
 		'utf8_spanish_ci' => 'Spanish, case-insensitive',
 		'utf8_swedish_ci' => 'Swedish, case-insensitive',
 		'utf8_turkish_ci' => 'Turkish, case-insensitive',
-		'utf8_unicode_ci' => 'Unicode (мультиязычный), case-insensitive'
+		'utf8_unicode_ci' => 'Unicode (multilingual), case-insensitive'
 	);
 
 	return Layout::create('database', $vars);
@@ -120,7 +120,7 @@ Route::post('database', array('before' => 'check', 'main' => function() {
 Route::get('metadata', array('before' => 'check', 'main' => function() {
 	// check we have a database
 	if( ! Session::get('install.database')) {
-		Notify::error('Пожалуйста укажите данные соединения с БД');
+		Notify::error('Укажите данные для соединения с БД');
 
 		return Response::redirect('database');
 	}
@@ -138,16 +138,16 @@ Route::post('metadata', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($metadata);
 
 	$validator->check('site_name')
-		->is_max(4, 'Пожалуйста укажите название сайта');
+		->is_max(4, 'Придумайте название для блога');
 
 	$validator->check('site_description')
-		->is_max(4, 'Пожалуйста укажите описание сайта');
+		->is_max(4, 'Придумайте описание для блога');
 
 	$validator->check('site_path')
-		->is_max(1, 'Пожалуйста укажите патч сайта');
+		->is_max(1, 'Введите патч для блога');
 
 	$validator->check('theme')
-		->is_max(1, 'Пожалуйста выберите шаблон сайта');
+		->is_max(1, 'Выберите шаблон по-умолчанию');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -168,7 +168,7 @@ Route::post('metadata', array('before' => 'check', 'main' => function() {
 Route::get('account', array('before' => 'check', 'main' => function() {
 	// check we have a database
 	if( ! Session::get('install.metadata')) {
-		Notify::error('Пожалуйста укажите информацию о сайте');
+		Notify::error('Укажите данные о вашем блоге');
 
 		return Response::redirect('metadata');
 	}
@@ -184,13 +184,13 @@ Route::post('account', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($account);
 
 	$validator->check('username')
-		->is_max(4, 'Пожалуйста укажите логин');
+		->is_max(4, 'Придумайте логин');
 
 	$validator->check('email')
-		->is_email('Пожалуйста укажите правильный Email');
+		->is_email('Введите правильный email адрес');
 
 	$validator->check('password')
-		->is_max(6, 'Пожалуйста, введите пароль от 6 символов длиной');
+		->is_max(6, 'Придумайте пароль, причем не короче 6 символов');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -223,7 +223,7 @@ Route::post('account', array('before' => 'check', 'main' => function() {
 Route::get('complete', function() {
 	// check we have a database
 	if( ! Session::get('install')) {
-		Notify::error('Пожалуйста выберите язык');
+		Notify::error('Выберите язык');
 
 		return Response::redirect('start');
 	}

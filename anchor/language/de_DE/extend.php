@@ -2,66 +2,66 @@
 
 return array(
 
-	'extend' => 'Erweiterung',
+	'extend' => 'Erweiterungen',
 
 	'fields' => 'Benutzerdefinierte Felder',
-	'fields_desc' => 'Zusätzliches Feld erstellen',
+	'fields_desc' => 'Erstelle zusätzliche Felder',
 
-	'variables' => 'Homepage Variablen',
-	'variables_desc' => 'Benutzerdefinierte Metadaten erstellen',
+	'variables' => 'Seiten Variablen',
+	'variables_desc' => 'Erstelle zusätzliche Metadaten',
 
-	'create_field' => 'Neues Feld erstellen',
-	'editing_custom_field' => 'Bearbeitung des Felds &ldquo;%s&rdquo;',
-	'nofields_desc' => 'Kein Feld vorhanden',
+	'create_field' => 'Erstelle ein neues Feld',
+	'editing_custom_field' => 'Bearbeite das &ldquo;%s&rdquo; Feld',
+	'nofields_desc' => 'Noch keine Felder',
 
-	'create_variable' => 'Neue Variable erstellen',
-	'editing_variable' => 'Bearbeitung der Variable &ldquo;%s&rdquo;',
-	'novars_desc' => 'Keine Variable vorhanden',
+	'create_variable' => 'Erstelle eine neue Variable',
+	'editing_variable' => 'Bearbeite die &ldquo;%s&rdquo; Variable',
+	'novars_desc' => 'Noch keine Variablen',
 
 	// form fields
 	'type' => 'Typ',
-	'type_explain' => 'Der Typ des Inhalts welcher zu diesem Feld hinzugefügt werden soll.',
+	'type_explain' => 'Der Inhaltstyp zu dem du das Feld hinzufügen möchtest.',
 
 	'field' => 'Feld',
-	'field_explain' => '',//Html Eingabe Typ
+	'field_explain' => 'Html Input-Feld Typ',
 
-	'key' => 'Schlüsselwort',
-	'key_explain' => 'Das Schlüsselwort für dein Feld',
-	'key_missing' => 'Bitte gib ein einzigartiges Schlüsselwort ein',
-	'key_exists' => 'Schlüsselwort ist bereits vorhanden',
+	'key' => 'Unique Key',
+	'key_explain' => 'Der unique key für dieses Feld',
+	'key_missing' => 'Bitte gib einen unique key kein',
+	'key_exists' => 'Der Key ist schon in Benutzung',
 
-	'label' => 'Label',
-	'label_explain' => 'Lesbaren Namen für das Feld eingeben',
-	'label_missing' => 'Bitte ein Label eingeben',
+	'label' => 'Feldname',
+	'label_explain' => 'Angezeigter Feldname',
+	'label_missing' => 'Bitte einen Feldnamen angeben',
 
-	'attribute_type' => 'Feld Typen',
-	'attribute_type_explain' => 'Dateitypen die akzeptiert werden sollen mit Komma trennen, wird nichts angegeben werden alle Typen akzeptiert.',
+	'attribute_type' => 'Dateitypen',
+	'attribute_type_explain' => 'Komma-separierte Liste aller erlaubter Dateitypen: Feld leer lassen um alle zu erlauben.',
 
 	// images
 	'attributes_size_width' => 'Maximale Bildbreite',
-	'attributes_size_width_explain' => 'Bilder die größer als die maximale Breite sind, werden verkleinert.',
+	'attributes_size_width_explain' => 'Bilder werden angepasst wenn sie die maximale Bildbreite überschreiten',
 
 	'attributes_size_height' => 'Maximale Bildhöhe',
-	'attributes_size_height_explain' => 'Bilder die größer als die maximale Höhe sind, werden verkleinert.',
+	'attributes_size_height_explain' => 'Bilder werden angepasst wenn sie die maximale Bildhöhe überschreiten',
 
 	// custom vars
 	'name' => 'Name',
-	'name_explain' => 'Ein einzigartiger Name',
-	'name_missing' => 'Bitte einen einzigartigen Namen eingeben',
-	'name_exists' => 'Name ist bereits vohanden',
+	'name_explain' => 'Ein unique Name',
+	'name_missing' => 'Bitte einen unique Name angeben',
+	'name_exists' => 'Der Name ist leider schon in Benutzung',
 
 	'value' => 'Wert',
-	'value_explain' => 'Die Daten, die Sie speichern möchten (bis zu 64 KB)',
-	'value_code_snipet' => 'Schnipsel für das Einfügen in das Template:<br>
+	'value_explain' => 'Die Daten die du speichern willst (bis zu 64KB)',
+	'value_code_snipet' => 'Snippet das in dein Template eingefügt werden soll:<br>
 		<code>' . e('<?php echo site_meta(\'%s\'); ?>') . '</code>',
 
 	// messages
 	'variable_created' => 'Deine Variable wurde erstellt',
-	'variable_updated' => 'Deine Variable wurde aktualisiert',
+	'variable_updated' => 'Deine Variable wurde geändert',
 	'variable_deleted' => 'Deine Variable wurde gelöscht',
 
 	'field_created' => 'Dein Feld wurde erstellt',
-	'field_updated' => 'Dein Feld wurde aktualisiert',
+	'field_updated' => 'Dein Feld wurde bearbeitet',
 	'field_deleted' => 'Dein Feld wurde gelöscht'
 
 );

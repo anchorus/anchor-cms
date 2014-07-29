@@ -4,20 +4,20 @@ return array(
 
 	'pages' => 'Seiten',
 
-	'create_page' => 'Neue Seite erstellen',
-	'nopages_desc' => 'Du hast noch keine Seite.',
+	'create_page' => 'Erstelle eine neue Seite',
+	'nopages_desc' => 'Du hast noch keine Seiten.',
 	'redirect' => 'Weiterleitung',
 
 	// form fields
-	'redirect_url' => 'URL für die Weiterleitung',
-	'redirect_missing' => 'Bitte eine gültige URL angeben',
+	'redirect_url' => 'Weiterleitungs Url',
+	'redirect_missing' => 'Bitte gib eine valide Url ein',
 
-	'title' => 'Titel der Seite',
+	'title' => 'Seitentitel',
 	'title_explain' => '',
-	'title_missing' => 'Bitte einen Seitentitel angeben',
+	'title_missing' => 'Bitte einen Titel für die Seite angeben',
 
 	'content' => 'Inhalt',
-	'content_explain' => 'Dein Seiteninhalt.',
+	'content_explain' => 'Der Inhalt deiner Seite. Verwendet Markdown.',
 
 	'show_in_menu' => 'Im Menü anzeigen',
 	'show_in_menu_explain' => '',
@@ -25,16 +25,16 @@ return array(
 	'name' => 'Name',
 	'name_explain' => '',
 
-	'slug' => 'Schlagwörter',
-	'slug_explain' => 'Schlagwörter um deine Seite zu identifizieren, Schlagwörter können nur aus ASCII-Zeichen bestehen',
-	'slug_missing' => 'Bitte Schlagwörter eingeben, Schlagwörter können nur aus ASCII-Zeichen bestehen',
-	'slug_duplicate' => 'Schlagwort existiert bereits',
-	'slug_invalid' => 'Ein Schlagwort besteht aus Buchstaben',
+	'slug' => 'Slug',
+	'slug_explain' => 'Slug uri um deine Seite anzuzeigen; sollte nur ascii Zeichen enthalten',
+	'slug_missing' => 'Bitte gib eine slug uri an: Slugs dürfen nur ascii Zeichen enthalten',
+	'slug_duplicate' => 'Slug existiert schon',
+	'slug_invalid' => 'Slug muss Buchstaben enthalten',
 
 	'status' => 'Status',
 	'status_explain' => '',
 
-	'parent' => 'Untergeordnet',
+	'parent' => 'Elternelement',
 	'parent_explain' => '',
 
 	// messages

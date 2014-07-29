@@ -2,41 +2,41 @@
 
 return array(
 
-	'metadata' => 'Homepage Metadaten',
-	'metadata_desc' => 'Verwalte die Daten der Homepage',
+	'metadata' => 'Metadaten der Seite',
+	'metadata_desc' => 'Metadaten der Seite verwalten',
 
 	'comment_settings' => 'Kommentare',
-	'theme_settings' => 'Design',
+	'theme_settings' => 'Theme',
 
 	// form fields
-	'sitename' => 'Homepagename',
+	'sitename' => 'Seitenname',
 	'sitename_explain' => '',
-	'sitename_missing' => 'Deine Homepage braucht einen Namen!',
+	'sitename_missing' => 'Deine Seite braucht einen Namen!',
 
-	'sitedescription' => 'Beschreibung',
+	'sitedescription' => 'Beschreibung der Seite',
 	'sitedescription_explain' => '',
-	'sitedescription_missing' => 'Deine Homepage braucht eine Beschreibung!',
+	'sitedescription_missing' => 'Deine Seite braucht eine Beschreibung!',
 
-	'homepage' => 'Startseite',
-	'homepage_explain' => 'Die Seite, die als erstes aufgerufen wird.',
+	'homepage' => 'Home Page',
+	'homepage_explain' => '',
 
-	'postspage' => 'Blog Seite',
-	'postspage_explain' => 'Die Seite, welche unter "Blog" erscheint.',
+	'postspage' => 'Posts Page',
+	'postspage_explain' => '',
 
-	'posts_per_page' => 'Artikel pro Seite',
+	'posts_per_page' => 'Posts pro Seite',
 	'posts_per_page_explain' => '',
 
-	'auto_publish_comments' => 'Kommentare automatisch zulassen',
+	'auto_publish_comments' => 'Kommentare automatisch erlauben',
 	'auto_publish_comments_explain' => '',
 
-	'comment_notifications' => 'E-Mail Benachrichtigung für neue Kommentare.',
+	'comment_notifications' => 'Email Benachrichtigung bei neuen Kommentaren',
 	'comment_notifications_explain' => '',
 
-	'comment_moderation_keys' => 'Spam Stichwörter',
-	'comment_moderation_keys_explain' => 'Durch Komma getrennte Liste von Schlüsselwörtern.
-		Kommentare, die diese Wörter enthalten werden automatisch unter Spam abgelegt.',
+	'comment_moderation_keys' => 'Spam keywords',
+	'comment_moderation_keys_explain' => 'Komma getrennte Liste von Begriffen die gebrüft werden sollen (Blacklist).
+		Kommentare werden automatisch als Spam markiert.',
 
-	'current_theme' => 'Aktuelles Design',
+	'current_theme' => 'Aktuelles Theme',
 	'current_theme_explain' => '',
 
 	// messages

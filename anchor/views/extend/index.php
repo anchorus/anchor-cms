@@ -28,8 +28,8 @@
 		</li>
 		<li>
 			<a href="<?php echo Uri::to('admin/extend/plugins'); ?>">
-				<strong>Плагины</strong>
-				<span>Уже скоро, йо!</span>
+				<strong>Plugins</strong>
+				<span>Coming soon, yo!</span>
 			</a>
 		</li>
 	</ul>

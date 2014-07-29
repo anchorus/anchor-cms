@@ -26,16 +26,16 @@
 
 	    <meta property="og:title" content="<?php echo site_name(); ?>">
 	    <meta property="og:type" content="website">
-	    <meta property="og:url" content="<?php echo current_url(); ?>">
+	    <meta property="og:url" content="<?php echo e(current_url()); ?>">
 	    <meta property="og:image" content="<?php echo theme_url('img/og_image.gif'); ?>">
 	    <meta property="og:site_name" content="<?php echo site_name(); ?>">
 	    <meta property="og:description" content="<?php echo site_description(); ?>">
 
 		<?php if(customised()): ?>
-		    <!-- Custom CSS -->
+		    <!-- Дополнительный CSS -->
     		<style><?php echo article_css(); ?></style>
 
-    		<!--  Custom Javascript -->
+    		<!-- Дополнительный Javascript -->
     		<script><?php echo article_js(); ?></script>
 		<?php endif; ?>
 	</head>
@@ -44,12 +44,12 @@
 			<div class="slidey" id="tray">
 				<div class="wrap">
 					<form id="search" action="<?php echo search_url(); ?>" method="post">
-						<label for="term">Поиск по блогу:</label>
-						<input type="search" id="term" name="term" placeholder="Введите и нажмите Enter&hellip;" value="<?php echo search_term(); ?>">
+						<label for="term">Поиск по блогу</label>
+						<input type="search" id="term" name="term" placeholder="Введите фразу и нажмите enter&hellip;" value="<?php echo search_term(); ?>">
 					</form>
 
 					<aside>
-						<b>Категории</b>
+						<b>Рубрики</b>
 						<ul>
 						<?php while(categories()): ?>
 							<li>
@@ -78,7 +78,7 @@
 						<?php endwhile; ?>
 
 						<li class="tray">
-							<a href="#tray" class="linky"><img src="<?php echo theme_url('img/categories.png'); ?>" alt="Categories" title="Категории записей"></a>
+							<a href="#tray" class="linky"><img src="<?php echo theme_url('img/categories.png'); ?>" alt="Рубрики" title="Просмотр записей по рубрикам"></a>
 						</li>
 					</ul>
 				</nav>

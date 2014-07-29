@@ -13,7 +13,7 @@ h1 {
 		padding: 60px 0;
 	}
 
-/* Откидная панель в шапке сайта. По-умолчанию скрыта. */
+/* The slide-down panel at the very top of the page. Like literally. It's above the page, hidden. */
 .slidey {
 	overflow: hidden;
 	padding: 30px 0;
@@ -110,7 +110,7 @@ h1 {
 			}
 
 /**
- *   Главная страница, страница поиска, страница с записями
+ *   Index page listing, category listing, search page results
  */
 .items {
 	list-style: none;
@@ -158,7 +158,7 @@ h1 {
 		}
 
 /**
- *   Пагинация
+ *   Pagination
  */
 .pagination {
 	overflow: hidden;
@@ -188,7 +188,7 @@ h1 {
 	}
 
 /**
- *   Дайте пространство для одной страницы / записи
+ *   Give some extra space to single-page wrappers
  */
 .content.wrap {
 	padding-bottom: 50px;
@@ -201,7 +201,7 @@ h1 {
 		}
 
 /**
- *   Список комментариев
+ *   Footnotes and straplines
  */
 .footnote, .commentlist time, .items footer {
 	display: block;
@@ -218,7 +218,7 @@ h1 {
 	}
 
 /**
- *   Форма комментирования
+ *   Comment form
  */
 ul.commentlist {
 	margin-bottom: 40px;
@@ -309,7 +309,7 @@ ul.commentlist {
 		}
 
 /**
- *   Подвал сайта
+ *   Footer
  */
 #bottom {
 	padding: 30px 0 40px;

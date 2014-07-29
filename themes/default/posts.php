@@ -16,7 +16,7 @@
 					</div>
 
 					<footer>
-						Написано <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> от <?php echo article_author('real_name'); ?>.
+						Написал <?php echo article_author('real_name'); ?> <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time>.
 					</footer>
 				</article>
 			</li>
@@ -42,7 +42,10 @@
 		<?php endif; ?>
 
 	<?php else: ?>
-		<p>Ещё ничего нет; нам нечего показать!</p>
+		<div class="wrap">
+			<h1>Записей нет!</h1>
+			<p>Похоже нужно что-нибудь написать!</p>
+		</div>
 	<?php endif; ?>
 
 </section>

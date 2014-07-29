@@ -1,8 +1,8 @@
 <nav>
-	<a class="icon bold" href="#bold"><?php echo __('global.bold'); ?></a> /
-	<a class="icon italic" href="#italic"><?php echo __('global.italic'); ?></a> /
-	<a class="icon lists" href="#list"><?php echo __('global.list'); ?></a> /
-	<a class="icon quote" href="#quote"><?php echo __('global.quote'); ?></a> /
-	<a class="icon code" href="#code"><?php echo __('global.code'); ?></a> /
-	<a class="icon link" href="#link"><?php echo __('global.link'); ?></a>
+	<a class="icon bold" href="#bold">Жирный</a>&nbsp;&nbsp;
+	<a class="icon italic" href="#italic">Наклонный</a>&nbsp;&nbsp;
+	<a class="icon list" href="#list">Список</a>&nbsp;&nbsp;
+	<a class="icon quote" href="#quote">Цитата</a>&nbsp;&nbsp;
+	<a class="icon code" href="#code">Код</a>&nbsp;&nbsp;
+	<a class="icon link" href="#link">Сссылка</a>
 </nav>

@@ -3,9 +3,9 @@
 return array(
 
 	'comments' => 'Комментарии',
-	'nocomments_desc' => 'Комментариев пока что нет.',
-	'editing_comment' => 'Редактировать комментарий',
-	'view_comment' => 'Смотреть комментарий',
+	'nocomments_desc' => 'Комментариев нет',
+	'editing_comment' => 'Изменение комментария',
+	'view_comment' => 'Перейти к комментарию',
 
 	// поля в форме
 	'name' => 'Имя',
@@ -14,21 +14,21 @@ return array(
 
 	'email' => 'Email адрес',
 	'email_explain' => 'Email автора.',
-	'email_missing', 'Введите email', // frontend message (appears on your site!)
+	'email_missing', 'Введите email', // отображается на сайте
 
 	'text' => 'Комментарий',
 	'text_explain' => '',
-	'text_missing' => 'Введите текст', // frontend message (appears on your site!)
+	'text_missing' => 'Введите текст', // отображается на сайте
 
 	'status' => 'Статус',
 	'status_explain' => '',
 
-	// уведомления
-	'created' => 'Комментарий добавлен', // frontend message (appears on your site!)
-	'updated' => 'Ваш комментарий был обновлен',
-	'deleted' => 'Ваш комментарий был удален',
+	// сообщения
+	'created' => 'Комментарий был добавлен', // отображается на сайте
+	'updated' => 'Комментарий был обновлен',
+	'deleted' => 'Комментарий был удален',
 
-	// email уведомления
+	// email сообщения
 	'notify_subject' => 'Был добавлен новый комментарий',
 	'nofity_heading' => 'На вашем сайте появился новый комментарий.'
 
