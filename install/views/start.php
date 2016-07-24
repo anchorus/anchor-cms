@@ -4,8 +4,7 @@
 	<article>
 		<h1>Привет. Hello. Willkommen. Bonjour. Croeso.</h1>
 
-		<p>Если вы искали действительно простую и красивую систему для блога, то вы на верном пути.
-		Просто заполните данные ниже, и ваш новый блог появится на свет уже через пару минут.</p>
+		<p>Если вы ищите по-настоящему лёгкую систему для блога, то вы на верном пути. Просто заполняйте все данные по ходу установки, и совсем скоро у вас уже появится новый блог.</p>
 	</article>
 
 	<form method="post" action="<?php echo uri_to('start'); ?>" autocomplete="off">
@@ -15,7 +14,7 @@
 			<p>
 				<label for="lang">
 					<strong>Язык</strong>
-					<span class="info">Anchor на вашем языке.</span>
+					<span class="info">Локализация Anchor.</span>
 				</label>
 				<select id="lang" class="chosen-select" name="language">
 					<?php foreach($languages as $lang): ?>
@@ -44,7 +43,7 @@
 		</fieldset>
 
 		<section class="options">
-			<button type="submit" class="btn">Вперед &raquo;</button>
+			<button type="submit" class="btn">Вперёд &raquo;</button>
 		</section>
 	</form>
 </section>

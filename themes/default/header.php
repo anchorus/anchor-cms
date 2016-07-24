@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
-		<title><?php echo page_title('Такой страницы нет'); ?> - <?php echo site_name(); ?></title>
+		<title><?php echo page_title('Страница не найдена'); ?> - <?php echo site_name(); ?></title>
 
 		<meta name="description" content="<?php echo site_description(); ?>">
 
@@ -35,7 +35,7 @@
 		    <!-- Дополнительный CSS -->
     		<style><?php echo article_css(); ?></style>
 
-    		<!-- Дополнительный Javascript -->
+    		<!--  Дополнительный Javascript -->
     		<script><?php echo article_js(); ?></script>
 		<?php endif; ?>
 	</head>
@@ -45,19 +45,21 @@
 				<div class="wrap">
 					<form id="search" action="<?php echo search_url(); ?>" method="post">
 						<label for="term">Поиск по блогу</label>
-						<input type="search" id="term" name="term" placeholder="Введите фразу и нажмите enter&hellip;" value="<?php echo search_term(); ?>">
+						<input type="search" id="term" name="term" placeholder="Напиши слово и нажми enter&hellip;" value="<?php echo search_term(); ?>">
+						<input type="hidden" id="whatSearch" name="whatSearch" value="all" />
 					</form>
 
 					<aside>
 						<b>Рубрики</b>
 						<ul>
-						<?php while(categories()): ?>
+						<?php while(categories()): 
+								if (category_count() > 0) { ?>
 							<li>
 								<a href="<?php echo category_url(); ?>" title="<?php echo category_description(); ?>">
 									<?php echo category_title(); ?> <span><?php echo category_count(); ?></span>
 								</a>
 							</li>
-						<?php endwhile; ?>
+						<?php } endwhile; ?>
 						</ul>
 					</aside>
 				</div>
@@ -66,21 +68,20 @@
 			<header id="top">
 				<a id="logo" href="<?php echo base_url(); ?>"><?php echo site_name(); ?></a>
 
-				<?php if(has_menu_items()): ?>
 				<nav id="main" role="navigation">
 					<ul>
-						<?php while(menu_items()): ?>
+						<?php if(has_menu_items()):
+							while(menu_items()): ?>
 						<li <?php echo (menu_active() ? 'class="active"' : ''); ?>>
 							<a href="<?php echo menu_url(); ?>" title="<?php echo menu_title(); ?>">
 								<?php echo menu_name(); ?>
 							</a>
 						</li>
-						<?php endwhile; ?>
-
+						<?php endwhile;
+							endif; ?>
 						<li class="tray">
-							<a href="#tray" class="linky"><img src="<?php echo theme_url('img/categories.png'); ?>" alt="Рубрики" title="Просмотр записей по рубрикам"></a>
+							<a href="#tray" class="linky"><img src="<?php echo theme_url('img/categories.png'); ?>" alt="Рубрики" title="Читать все записи в рубрике"></a>
 						</li>
 					</ul>
 				</nav>
-				<?php endif; ?>
 			</header>

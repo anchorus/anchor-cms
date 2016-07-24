@@ -4,6 +4,20 @@ class Extend extends Base {
 
 	public static $table = 'extend';
 
+	public static $types = array(
+		'post' => 'post',
+		'page' => 'page',
+		'category' => 'category',
+		'user' => 'user'
+	);
+
+	public static $field_types = array(
+		'text' => 'text',
+		'html' => 'html',
+		'image' => 'image',
+		'file' => 'file'
+	);
+
 	public static function field($type, $key, $id = -1) {
 		$field = Query::table(static::table())
 			->where('type', '=', $type)
@@ -49,8 +63,12 @@ class Extend extends Base {
 		return $value;
 	}
 
-	public static function fields($type, $id = -1) {
-		$fields = Query::table(static::table())->where('type', '=', $type)->get();
+	public static function fields($type, $id = -1, $pagetype = null) {
+		if (is_null($pagetype)) {
+			$fields = Query::table(static::table())->where('type', '=', $type)->get();
+		} else {
+			$fields = Query::table(static::table())->where_in('pagetype', array($pagetype, 'all'))->where('type', '=', $type)->get();
+		}
 
 		foreach(array_keys($fields) as $index) {
 			$meta = Query::table(static::table($type . '_meta'))
@@ -68,7 +86,7 @@ class Extend extends Base {
 		switch($item->field) {
 			case 'text':
 				$value = isset($item->value->text) ? $item->value->text : '';
-				$html = '<input id="extend_' . $item->key . '" name="extend[' . $item->key . ']" type="text" value="' . $value . '">';
+				$html = '<input id="extend_' . $item->key . '" name="extend[' . $item->key . ']" type="text" value="' . htmlentities($value) . '">';
 				break;
 
 			case 'html':
@@ -136,21 +154,10 @@ class Extend extends Base {
 	}
 
 	public static function upload($file) {
-		$storage = PATH . 'content' . DS;
+		$uploader = new Uploader(PATH . 'content', array('png', 'jpg', 'bmp', 'gif', 'pdf'));
+		$filepath = $uploader->upload($file);
 
-		if(!is_dir($storage)) mkdir($storage);
-
-		$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-
-		// Added rtrim to remove file extension before adding again
-		$filename = slug(rtrim($file['name'], '.' . $ext)) . '.' . $ext;
-		$filepath = $storage . $filename;
-
-		if(move_uploaded_file($file['tmp_name'], $filepath)) {
-			return $filepath;
-		}
-
-		return false;
+		return $filepath;
 	}
 
 	public static function process_image($extend) {
@@ -162,26 +169,38 @@ class Extend extends Base {
 
 			if($filepath = static::upload($file)) {
 				$filename = basename($filepath);
+				self::resizeImage($filepath);
+			}
+		}
 
-				// resize image
-				if(isset($extend->attributes->size->width) and isset($extend->attributes->size->height)) {
-					$image = Image::open($filepath);
+		// Handle images which have been uploaded indirectly
+		// not as files.
+		$image_upload = Input::get('extend.' . $extend->key);
+		if ($image_upload) {
+			$filename = basename($image_upload);
+			$name = $filename;
+		}
 
-					$width = intval($extend->attributes->size->width);
-					$height = intval($extend->attributes->size->height);
+		$data = compact('name', 'filename');
+		return Json::encode($data);
+	}
 
-					// resize larger images
-					if(
-						($width and $height) and
-						($image->width() > $width or $image->height() > $height)
-					) {
-						$image->resize($width, $height);
+	private static function resizeImage($extend, $filepath) {
+		// resize image
+		if(isset($extend->attributes->size->width) and isset($extend->attributes->size->height)) {
+			$image = Image::open($filepath);
 
-						$image->output($ext, $filepath);
-					}
-				}
+			$width = intval($extend->attributes->size->width);
+			$height = intval($extend->attributes->size->height);
 
-				return Json::encode(compact('name', 'filename'));
+			// resize larger images
+			if(
+				($width and $height) and
+				($image->width() > $width or $image->height() > $height)
+			) {
+				$image->resize($width, $height);
+
+				$image->output($ext, $filepath);
 			}
 		}
 	}

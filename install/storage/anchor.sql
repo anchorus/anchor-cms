@@ -21,7 +21,7 @@ CREATE TABLE `{{prefix}}comments` (
 
 CREATE TABLE `{{prefix}}extend` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
-  `type` enum('post','page') NOT NULL,
+  `type` enum('post','page','user') NOT NULL,
   `field` enum('text','html','image','file') NOT NULL,
   `key` varchar(160) NOT NULL,
   `label` varchar(160) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE `{{prefix}}pages` (
   `status` enum('draft','published','archived') NOT NULL,
   `redirect` text NOT NULL,
   `show_in_menu` tinyint(1) NOT NULL,
-  `menu_order` int(4) NOT NULL,
+  `menu_order` int(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `status` (`status`),
   KEY `slug` (`slug`)
@@ -82,7 +82,7 @@ CREATE TABLE `{{prefix}}posts` (
   `author` int(6) NOT NULL,
   `category` int(6) NOT NULL,
   `status` enum('draft','published','archived') NOT NULL,
-  `comments` tinyint(1) NOT NULL,
+  `comments` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `status` (`status`),
   KEY `slug` (`slug`)
@@ -123,4 +123,4 @@ INSERT INTO `{{prefix}}pages` (`slug`, `name`, `title`, `content`, `status`, `re
 ('posts', 'Записи', 'Мои записи и мысли', 'Привет!', 'published', '', '1', '0');
 
 INSERT INTO `{{prefix}}posts` (`title`, `slug`, `description`, `html`, `css`, `js`, `created`, `author`, `category`, `status`, `comments`) VALUES
-('Привет мир', 'hello-world', 'Это первая запись.', 'Привет!\r\n\r\nЭто просто первая запись в блоге.', '', '', '{{now}}', '1', '1', 'published', '0');
+('Привет, мир', 'hello-world', 'Это первая запись.', 'Привет, мир!\r\n\r\nЭто первая запись в твоём новом блоге.', '', '', '{{now}}', '1', '1', 'published', '0');

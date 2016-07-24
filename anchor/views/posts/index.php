@@ -14,14 +14,26 @@
 	<?php echo $messages; ?>
 
 	<nav class="sidebar">
-		<?php echo Html::link('admin/posts', __('global.all'), array(
-			'class' => isset($category) ? '' : 'active'
-		)); ?>
-	    <?php foreach($categories as $cat): ?>
-		<?php echo Html::link('admin/posts/category/' . $cat->slug, $cat->title, array(
-			'class' => (isset($category) and $category->id == $cat->id) ? 'active' : ''
-		)); ?>
-	    <?php endforeach; ?>
+		<nav class="statuses">
+			<p>Статусы</p>
+			<?php echo Html::link('admin/posts', '<span class="icon"></span> ' . __('global.all'), array(
+				'class' => isset($status) ? ($status == 'all' ? 'active' : '') : ''
+			)); ?>
+			<?php foreach(array('published', 'draft', 'archived') as $type): ?>
+			<?php echo Html::link('admin/posts/status/' . $type, '<span class="icon"></span> ' . __('global.' . $type), array(
+				'class' => ($status == $type) ? 'active' : ''
+			)); ?>
+			<?php endforeach; ?>
+		</nav>
+		<br>
+		<nav class="categories">
+			<p>Рубрики</p>
+			<?php foreach($categories as $cat): ?>
+			<?php echo Html::link('admin/posts/category/' . $cat->slug, $cat->title, array(
+				'class' => (isset($category) and $category->id == $cat->id) ? 'active' : ''
+			)); ?>
+			<?php endforeach; ?>
+		</nav>
 	</nav>
 
 	<?php if($posts->count): ?>

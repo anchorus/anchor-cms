@@ -5,47 +5,47 @@ return array(
 	'posts' => 'Записи',
 
 	'create_post' => 'Добавить запись',
-	'noposts_desc' => 'Записей нет',
+	'noposts_desc' => 'Ещё нет ни одной записи!',
 
-	// поля в форме
-	'title' => 'Заголовок',
+	// поля формы
+	'title' => 'Название записи',
 	'title_explain' => '',
-	'title_missing' => 'Введите заголовок записи',
+	'title_missing' => 'Название должно состоять хотя бы из 3-ёх символов.',
 
 	'content' => 'Содержимое записи',
 	'content_explain' => 'Просто пишите.',
 
-	'slug' => 'URL записи',
-	'slug_explain' => 'Состоит только из латинских символов (например <code>wow</code>)',
-	'slug_missing' => 'Введите URL адрес',
-	'slug_duplicate' => 'Адрес уже используется',
-	'slug_invalid' => 'Адрес должен содержать буквы',
+	'slug' => 'URL адрес',
+	'slug_explain' => 'Состоит только из латинских символов (например <code>wow</code>).',
+	'slug_missing' => 'Адрес должен состоять хотя бы из 3-ёх латинских символов без пробелов.',
+	'slug_duplicate' => 'Адрес уже используется.',
+	'slug_invalid' => 'Адрес должен содержать буквы.',
 
-	'time' => 'Дата (в GMT)',
-	'time_explain' => 'Шаблон: YYYY-MM-DD HH:MM:SS',
-	'time_invalid' => 'Неправильная дата',
+	'time' => 'Дата и время (в GMT)',
+	'time_explain' => 'Шаблон: ГГГГ-ММ-ДД ЧЧ:ММ:СС',
+	'time_invalid' => 'Неправильная дата.',
 
 	'description' => 'Описание',
 	'description_explain' => '',
 
-	'status' => 'Видимость',
+	'status' => 'Статус',
 	'status_explain' => '',
 
 	'category' => 'Рубрика',
 	'category_explain' => '',
 
-	'allow_comments' => 'Разрешить комментарии',
+	'allow_comments' => 'Комментарии',
 	'allow_comments_explain' => '',
 
-	'custom_css' => 'CSS',
+	'custom_css' => 'Добавить CSS',
 	'custom_css_explain' => '',
 
-	'custom_js' => 'JS',
+	'custom_js' => 'Добавить JS',
 	'custom_js_explain' => '',
 
-	// сообщения
-	'updated' => 'Запись была обновлена',
-	'created' => 'Новая запись была добавлена',
-	'deleted' => 'Запись была удалена'
+	// уведомления
+	'updated' => 'Запись была обновлена.',
+	'created' => 'Запись была добавлена.',
+	'deleted' => 'Запись была удалена.'
 
 );

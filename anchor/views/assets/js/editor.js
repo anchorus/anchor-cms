@@ -170,3 +170,91 @@
 		});
 	};
 }(Zepto));
+
+/**
+ * AJAX form and keyboard shortcuts
+ */
+;(function($) {
+	var zone = $(document),
+		form = $('form').first(),
+		submit = form.find('button[type=submit]'),
+		submitText = submit.html(),
+		submitProgress = submit.data('loading'),
+		activeMenu = $('.top nav .active a'),
+		wrapper = $('.header .wrap'),
+		title = document.title;
+
+	// Press `CTRL + S` to `Save`
+	zone.on('keydown', function(event) {
+		if(event.ctrlKey && event.keyCode == 83 && !(event.altKey)) {
+			form.trigger('submit');
+			return false;
+		}
+	});
+
+	// AJAX form submit
+	form.on('submit', function() {
+		var data = {};
+		$.each($(this).serializeArray(), function(_, kv) {
+		  data[kv.name] = kv.value;
+		});
+		
+		var didAutosave = $(".autosave-action").hasClass("autosave-on");
+		data.autosave = didAutosave;
+		
+		submit.prop('disabled', true).css('cursor', 'wait').html(submitProgress);
+
+		document.title = submitProgress;
+
+		$.ajax({
+			url: form.attr('action'),
+			type: "POST",
+			data: data,
+			success: function(data, textStatus, jqXHR) {
+
+				var notification = $(data).find('.notifications').clone(true),
+					message = notification.children().first().text();
+
+				wrapper.prepend(notification);
+
+				document.title = message;
+
+				setTimeout(function() {
+					notification.animate({
+						opacity: 0
+					}, 600, "ease-out", function() {
+
+						if(jqXHR.responseURL != window.location.href) {
+							window.location.href = jqXHR.responseURL;
+						}
+						
+						$(this).remove();
+					});
+					document.title = title;
+				}, 3000);
+
+				submit.prop('disabled', false).html(submitText).removeAttr('style');
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				var notification = $('<div class="notifications"><p class="error">Error</p></div>');
+
+				wrapper.prepend(notification);
+
+				document.title = "Error";
+
+				setTimeout(function() {
+					notification.animate({
+						opacity: 0
+					}, 600, "ease-out", function() {
+						$(this).remove();
+					});
+					document.title = title;
+				}, 3000);
+
+				submit.prop('disabled', false).html(submitText).removeAttr('style');
+			}
+		});
+
+		return false;
+	});
+}(Zepto));

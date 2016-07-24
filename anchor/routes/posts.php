@@ -1,12 +1,12 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List all posts and paginate through them
 	*/
 	Route::get(array('admin/posts', 'admin/posts/(:num)'), function($page = 1) {
-		$perpage = Config::meta('posts_per_page');
+		$perpage = Config::get('admin.posts_per_page');
 		$total = Post::count();
 		$posts = Post::sort('created', 'desc')->take($perpage)->skip(($page - 1) * $perpage)->get();
 		$url = Uri::to('admin/posts');
@@ -16,6 +16,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		$vars['messages'] = Notify::read();
 		$vars['posts'] = $pagination;
 		$vars['categories'] = Category::sort('title')->get();
+		$vars['status'] = 'all';
 
 		return View::create('posts/index', $vars)
 			->partial('header', 'partials/header')
@@ -34,8 +35,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		}
 
 		$query = Post::where('category', '=', $category->id);
-
-		$perpage = Config::meta('posts_per_page');
+		$perpage = Config::get('admin.posts_per_page');
 		$total = $query->count();
 		$posts = $query->sort('created', 'desc')->take($perpage)->skip(($page - 1) * $perpage)->get();
 		$url = Uri::to('admin/posts/category/' . $category->slug);
@@ -46,11 +46,39 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		$vars['posts'] = $pagination;
 		$vars['category'] = $category;
 		$vars['categories'] = Category::sort('title')->get();
+		$vars['status']	= 'all';
 
 		return View::create('posts/index', $vars)
 			->partial('header', 'partials/header')
 			->partial('footer', 'partials/footer');
 	});
+
+	/*
+		List posts by status and paginate through them
+	*/
+	Route::get(array(
+		'admin/posts/status/(:any)',
+		'admin/posts/status/(:any)/(:num)'), function($status, $post = 1) {
+
+		$query = Post::where('status', '=', $status);
+
+		$perpage = Config::get('admin.posts_per_page');
+		$total = $query->count();
+		$posts = $query->sort('title')->take($perpage)->skip(($post - 1) * $perpage)->get();
+		$url = Uri::to('admin/posts/status');
+
+		$pagination = new Paginator($posts, $total, $post, $perpage, $url);
+
+		$vars['messages'] = Notify::read();
+		$vars['posts'] = $pagination;
+		$vars['status'] = $status;
+		$vars['categories'] = Category::sort('title')->get();
+
+		return View::create('posts/index', $vars)
+			->partial('header', 'partials/header')
+			->partial('footer', 'partials/footer');
+	});
+
 
 	/*
 		Edit post
@@ -80,7 +108,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/posts/edit/(:num)', function($id) {
 		$input = Input::get(array('title', 'slug', 'description', 'created',
-			'html', 'css', 'js', 'category', 'status', 'comments'));
+			'markdown', 'css', 'js', 'category', 'status', 'comments'));
 
 		// if there is no slug try and create one from the title
 		if(empty($input['slug'])) {
@@ -89,10 +117,15 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
-
-		// encode title
-		$input['title'] = e($input['title'], ENT_COMPAT);
-
+		
+		// an array of items that we shouldn't encode - they're no XSS threat
+		$dont_encode = array('description', 'markdown', 'css', 'js');
+		
+		foreach($input as $key => &$value) {
+			if(in_array($key, $dont_encode)) continue;
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->add('duplicate', function($str) use($id) {
@@ -118,20 +151,22 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 			return Response::redirect('admin/posts/edit/' . $id);
 		}
 
-		if($input['created']) {
-			$input['created'] = Date::mysql($input['created']);
-		}
-		else {
+		$current_post = Post::find($id);
+		if($current_post->status == 'draft') {
+			$input['created'] = Date::mysql('now');
+		} else {
 			unset($input['created']);
 		}
 
-		if(is_null($input['comments'])) {
+		if(empty($input['comments'])) {
 			$input['comments'] = 0;
 		}
 
-		if(empty($input['html'])) {
+		if(empty($input['markdown'])) {
 			$input['status'] = 'draft';
 		}
+
+		$input['html'] = parse($input['markdown']);
 
 		Post::update($id, $input);
 
@@ -169,7 +204,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/posts/add', function() {
 		$input = Input::get(array('title', 'slug', 'description', 'created',
-			'html', 'css', 'js', 'category', 'status', 'comments'));
+			'markdown', 'css', 'js', 'category', 'status', 'comments'));
 
 		// if there is no slug try and create one from the title
 		if(empty($input['slug'])) {
@@ -178,10 +213,15 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
-
-		// encode title
-		$input['title'] = e($input['title'], ENT_COMPAT);
-
+		
+		// an array of items that we shouldn't encode - they're no XSS threat
+		$dont_encode = array('description', 'markdown', 'css', 'js');
+		
+		foreach($input as $key => &$value) {
+			if(in_array($key, $dont_encode)) continue;
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->add('duplicate', function($str) {
@@ -212,32 +252,35 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$input['author'] = $user->id;
 
-		if(is_null($input['comments'])) {
+		if(empty($input['comments'])) {
 			$input['comments'] = 0;
 		}
 
-		if(empty($input['html'])) {
+		if(empty($input['markdown'])) {
 			$input['status'] = 'draft';
 		}
+
+		$input['html'] = parse($input['markdown']);
 
 		$post = Post::create($input);
 
 		Extend::process('post', $post->id);
 
 		Notify::success(__('posts.created'));
-
-		return Response::redirect('admin/posts');
+		
+		if(Input::get('autosave') === 'true') return Response::redirect('admin/posts/edit/' . $page->id);
+		else return Response::redirect('admin/posts');
 	});
 
 	/*
 		Preview post
 	*/
 	Route::post('admin/posts/preview', function() {
-		$html = Input::get('html');
+		$markdown = Input::get('markdown');
 
 		// apply markdown processing
 		$md = new Markdown;
-		$output = Json::encode(array('html' => $md->transform($html)));
+		$output = Json::encode(array('markdown' => $md->transform($markdown)));
 
 		return Response::create($output, 200, array('content-type' => 'application/json'));
 	});
@@ -256,5 +299,4 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		return Response::redirect('admin/posts');
 	});
-
 });

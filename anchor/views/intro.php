@@ -55,7 +55,7 @@
 	<body>
 		<div>
 			<img src="<?php echo $base; ?>/anchor/views/assets/img/logo.png" alt="Anchor logo">
-			<h1>Привет, Anchor.<br>Поехали!</h1>
+			<h1>Привет, Anchor!</h1>
 			<a href="<?php echo $base . '/install/index.php'; ?>">Перейти к установке</a>
 		</div>
 

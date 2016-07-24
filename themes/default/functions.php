@@ -6,10 +6,14 @@
 	Note: we recommend you prefix all your functions to avoid any naming
 	collisions or wrap your functions with if function_exists braces.
 */
-function numeral($number) {
+function numeral($number, $hideIfOne = false) {
+	if($hideIfOne === true and $number == 1) {
+		return 'первая';
+	}
+
 	$test = abs($number) % 10;
-	$ext = ((abs($number) % 100 < 21 and abs($number) % 100 > 4) ? '' : (($test < 4) ? ($test < 3) ? ($test < 2) ? ($test < 1) ? '' : '' : '' : '' : ''));
-	return $number . $ext;
+	//$ext = ((abs($number) % 100 < 21 and abs($number) % 100 > 4) ? 'th' : (($test < 4) ? ($test < //3) ? ($test < 2) ? ($test < 1) ? 'th' : 'st' : 'nd' : 'rd' : 'th'));
+	return $number; // . $ext;
 }
 
 function count_words($str) {
@@ -36,7 +40,7 @@ function relative_time($date) {
 	}
 
 	$times = array(
-		31104000 => 'год',
+		31104000 => 'лет',
 		2592000 => 'месяцев',
 		604800 => 'недель',
 		86400 => 'дней',

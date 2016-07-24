@@ -31,7 +31,12 @@ function asset_url($extra = '') {
 	return asset('anchor/views/assets/' . ltrim($extra, '/'));
 }
 
+
 function current_url() {
+	return htmlentities(raw_current_url());
+}
+
+function raw_current_url() {
 	return Uri::current();
 }
 
@@ -51,10 +56,6 @@ function receive($name = '') {
 function body_class() {
 	$classes = array();
 
-	//  Get the URL slug
-	$parts = explode('/', Uri::current());
-	$classes[] = count($parts) ? trim(current($parts)) : 'index';
-
 	//  Is it a posts page?
 	if(is_postspage()) {
 		$classes[] = 'posts';
@@ -63,6 +64,16 @@ function body_class() {
 	//  Is it the homepage?
 	if(is_homepage()) {
 		$classes[] = 'home';
+	}
+	
+	//  Is it a single post?
+	if(is_article()) {
+		$classes[] = 'article';
+	}
+	
+	//  Is it a custom page?
+	if(is_page()) {
+		$classes[] = 'page';
 	}
 
 	return implode(' ', array_unique($classes));

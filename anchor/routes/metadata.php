@@ -1,6 +1,6 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,install_exists'), function() {
 
 	/*
 		List Metadata
@@ -23,10 +23,14 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	*/
 	Route::post('admin/extend/metadata', function() {
 		$input = Input::get(array('sitename', 'description', 'home_page', 'posts_page',
-			'posts_per_page', 'auto_published_comments', 'theme', 'comment_notifications', 'comment_moderation_keys'));
-
+			'posts_per_page', 'auto_published_comments', 'theme', 'comment_notifications', 'comment_moderation_keys', 'show_all_posts'));
+		
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
-
+		
 		$validator->check('sitename')
 			->is_max(3, __('metadata.sitename_missing'));
 
@@ -49,6 +53,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		$input['description'] = e($input['description'], ENT_COMPAT);
 
 		foreach($input as $key => $value) {
+			$value = is_null($value) ? 0 : $value;
 			Query::table(Base::table('meta'))->where('key', '=', $key)->update(array('value' => $value));
 		}
 

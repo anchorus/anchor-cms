@@ -30,6 +30,9 @@ function categories() {
 		$items->next();
 	}
 
+	// back to the start
+	if(!$result) $items->rewind();
+
 	return $result;
 }
 
@@ -58,4 +61,14 @@ function category_count() {
 	return Query::table(Base::table('posts'))
 		->where('category', '=', category_id())
 		->where('status', '=', 'published')->count();
+}
+
+function category_custom_field($key, $default = '') {
+	$id = Registry::prop('category', 'id');
+
+	if($extend = Extend::field('category', $key, $id)) {
+		return Extend::value($extend, $default);
+	}
+
+	return $default;
 }

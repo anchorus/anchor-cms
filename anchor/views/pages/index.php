@@ -6,6 +6,7 @@
 	<?php if($pages->count): ?>
 	<nav>
 		<?php echo Html::link('admin/pages/add', __('pages.create_page'), array('class' => 'btn')); ?>
+		<?php echo Html::link('admin/menu', __('menu.edit_menu'), array('class' => 'btn')); ?>
 	</nav>
 	<?php endif; ?>
 </hgroup>
@@ -26,20 +27,22 @@
 
 	<?php if($pages->count): ?>
 	<ul class="main list">
-		<?php foreach($pages->results as $page): ?>
-		<li>
-			<a href="<?php echo Uri::to('admin/pages/edit/' . $page->id); ?>">
-				<strong><?php echo $page->name; ?></strong>
-
-				<span>
-					<?php echo $page->slug; ?>
-
-					<em class="status <?php echo $page->status; ?>" title="<?php echo __('global.' . $page->status); ?>">
-						<?php echo __('global.' . $page->status); ?>
-					</em>
-				</span>
-			</a>
-		</li>
+		<?php foreach($pages->results as $item): $display_pages = array_merge(array($item), $item->children());?>
+			<?php foreach($display_pages as $page) : ?>
+			<li>
+				<a href="<?php echo Uri::to('admin/pages/edit/' . $page->data['id']); ?>">
+					<div class="<?php echo ($page->data['parent'] != 0 ? 'indent' : ''); ?>">
+						<strong><?php echo $page->data['name']; ?></strong>
+						<span>
+							<?php echo $page->data['slug']; ?>
+							<em class="status <?php echo $page->data['status']; ?>" title="<?php echo __('global.' . $page->data['status']); ?>">
+								<?php echo __('global.' . $page->data['status']); ?>
+							</em>
+						</span>
+					</div>
+				</a>
+			</li>
+			<?php endforeach; ?>
 		<?php endforeach; ?>
 	</ul>
 

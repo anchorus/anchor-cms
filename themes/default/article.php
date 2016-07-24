@@ -1,5 +1,4 @@
 <?php theme_include('header'); ?>
-
 		<section class="content wrap" id="article-<?php echo article_id(); ?>">
 			<h1><?php echo article_title(); ?></h1>
 
@@ -9,7 +8,7 @@
 
 			<section class="footnote">
 				<!-- Unfortunately, CSS means everything's got to be inline. -->
-				<p>Это моя <?php echo numeral(total_articles()); ?> запись. Здесь <?php echo count_words(article_markdown()); ?> слов<?php if(comments_open()): ?>, и <?php echo total_comments() . pluralise(total_comments(), ' комментариев'); ?> сейчас.<?php endif; ?> <?php echo article_custom_field('attribution'); ?></p>
+				<p>Это моя <?php echo numeral(article_number(article_id()), true); ?> запись. Здесь  <?php echo count_words(article_markdown()); ?> слов<?php if(comments_open()): ?>, и <?php echo total_comments() . pluralise(total_comments(), ' комментариев'); ?> сейчас<?php endif; ?>. <?php echo article_custom_field('attribution'); ?></p>
 			</section>
 		</section>
 
@@ -24,7 +23,7 @@
 						<time><?php echo relative_time(comment_time()); ?></time>
 
 						<div class="content">
-							<?php echo comment_text(); ?>
+							<?php echo htmlspecialchars(comment_text()); ?>
 						</div>
 
 						<span class="counter"><?php echo $i; ?></span>
@@ -43,8 +42,8 @@
 				</p>
 
 				<p class="email">
-					<label for="email">Ваш mail адрес:</label>
-					<?php echo comment_form_input_email('placeholder="Ваш email (не будет опубликован)"'); ?>
+					<label for="email">Ваш email:</label>
+					<?php echo comment_form_input_email('placeholder="Ваша почта (не будет опубликована)"'); ?>
 				</p>
 
 				<p class="textarea">

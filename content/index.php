@@ -1,1 +1,1 @@
-<?php // Здесь ничего нет и не будет.
+<?php // Nothing to see here move along.

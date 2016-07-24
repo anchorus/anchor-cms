@@ -39,24 +39,22 @@ if($route = Arr::get($_GET, 'route', '/')) {
 */
 function timezones() {
 	$list = DateTimeZone::listIdentifiers();
-
 	$data = array();
-    foreach($list as $id => $zone){
-        $now = new DateTime(null, new DateTimeZone($zone));
-        $offset = $now->getOffset();
-        $offset_round = round(abs($offset / 3600), 2);
-        $minutes = fmod($offset_round, 1);
-
+    foreach($list as $id => $zone) {
+        $date= new DateTime(null, new DateTimeZone($zone));
+        $ds = $date->format('I');
+        $offset = $date->getOffset();
+        $gmt = round(abs($offset / 3600), 2);
+        $gmt = ($ds == 1 ? $gmt : $gmt-1 );
+        $minutes = fmod($gmt, 1);
         if($minutes == 0) {
-            $offset_label = $offset_round.'&nbsp;&nbsp;';
+            $offset_label = $gmt.'&nbsp;&nbsp;';
         } elseif ($minutes == 0.5) {
-            $offset_label = (int)$offset_round.'.30';
+            $offset_label = (int)$gmt.'.30';
         } elseif ($minutes == 0.75) {
-            $offset_label = (int)$offset_round.'.45';
+            $offset_label = (int)$gmt.'.45';
         }
-
         $sign = $offset > 0 ? '+' : '-';
-
         if($offset == 0) {
             $sign = ' ';
             $offset = '';
@@ -65,20 +63,14 @@ function timezones() {
         $data[$offset][$zone] = array('offset'=> $offset, 'label' => $label, 'timezone_id' => $zone);
     }
     ksort($data);
-
 	$timezones = array();
-
 	foreach($data as $offsets) {
-
 		ksort($offsets);
-
 		foreach($offsets as $zone) {
 			$timezones[] = $zone;
 		}
 	}
-
 	return $timezones;
-
 }
 
 function current_timezone() {
@@ -143,19 +135,21 @@ function check($message, $action) {
 	}
 }
 
-check('Каталог <code>content</code> должен быть доступен для записи.', function() {
+check('Каталог <code>content</code> должен обладать правами на запись, чтобы
+    мы могли загружать изображения и файлы.', function() {
 	return is_writable(PATH . 'content');
 });
 
-check('Каталог <code>anchor/config</code> должен быть доступен для записи.', function() {
+check('Каталог <code>anchor/config</code> временно должен обладать правами 
+    на запись, чтобы мы могли создать файлы конфигурации.', function() {
 	return is_writable(PATH . 'anchor/config');
 });
 
-check('Anchor требует php модуль <code>pdo_mysql</code> для установки.', function() {
+check('Anchor необходим php модуль <code>pdo_mysql</code>.', function() {
 	return extension_loaded('PDO') and extension_loaded('pdo_mysql');
 });
 
-check('Anchor требует php модуль <code>GD</code> для установки.', function() {
+check('Anchor необходим php модуль <code>GD</code>.', function() {
 	return extension_loaded('gd');
 });
 

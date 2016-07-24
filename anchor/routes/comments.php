@@ -1,13 +1,13 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List Comments
 	*/
 	Route::get(array('admin/comments', 'admin/comments/(:num)'), function($page = 1) {
 		$query = Query::table(Base::table(Comment::$table));
-		$perpage = Config::meta('posts_per_page');
+		$perpage = Config::get('admin.posts_per_page');
 
 		$count = $query->count();
 		$results = $query->take($perpage)->skip(($page - 1) * $perpage)->sort('date', 'desc')->get();
@@ -35,7 +35,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		'admin/comments/(pending|approved|spam)/(:num)'), function($status = '', $page = 1) {
 
 		$query = Query::table(Base::table(Comment::$table));
-		$perpage = Config::meta('posts_per_page');
+		$perpage = Config::get('admin.posts_per_page');
 
 		if(in_array($status, array('pending', 'approved', 'spam'))) {
 			$query->where('status', '=', $status);
@@ -81,7 +81,11 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/comments/edit/(:num)', function($id) {
 		$input = Input::get(array('name', 'email', 'text', 'status'));
-
+		
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->check('name')

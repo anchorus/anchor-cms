@@ -99,6 +99,6 @@ function comment_form_input_text($extra = '') {
 	return '<textarea name="text" id="text" ' . $extra . '>' . Input::previous('text') . '</textarea>';
 }
 
-function comment_form_button($text = 'Отправить', $extra = '') {
-	return '<button class="btn" type="submit" ' . $extra . '>' . $text . '</button>';
+function comment_form_button($text = 'Отправить комментарий', $extra = '') {
+	return '<button type="submit" ' . $extra . '>' . $text . '</button>';
 }

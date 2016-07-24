@@ -1,6 +1,6 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List Vars
@@ -36,24 +36,24 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/extend/variables/add', function() {
 		$input = Input::get(array('key', 'value'));
-
+		
 		$input['key'] = 'custom_' . slug($input['key'], '_');
-
+		
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
-
+		
 		$validator->add('valid_key', function($str) {
-			if(strlen($str) > 7) {
-				return Query::table(Base::table('meta'))
-					->where('key', '=', $str)
-					->count() == 0;
-			}
-
-			return true;
+			return Query::table(Base::table('meta'))
+				->where('key', '=', $str)
+				->count() == 0;
 		});
 
 		$validator->check('key')
 			// include prefix length 'custom_'
-			->is_max(7, __('extend.name_missing'))
+			->is_max(8, __('extend.name_missing'))
 			->is_valid_key(__('extend.name_exists'));
 
 		if($errors = $validator->errors()) {
@@ -89,22 +89,26 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/extend/variables/edit/(:any)', function($key) {
 		$input = Input::get(array('key', 'value'));
-
+		
 		$input['key'] = 'custom_' . slug($input['key'], '_');
-
+		
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
-
+		
 		$validator->add('valid_key', function($str) use($key) {
 			// no change
-			if($str == $key) return true;
+			if($str == $key) return false;
 
 			// check the new key $str is available
-			return Query::table(Base::table('meta'))->where('key', '=', $str)->count() == 0;
+			return Query::table(Base::table('meta'))->where('key', '=', $str)->count() != 0;
 		});
 
 		$validator->check('key')
 			// include prefix length 'custom_'
-			->is_max(7, __('extend.name_missing'))
+			->is_max(8, __('extend.name_missing'))
 			->is_valid_key(__('extend.name_exists'));
 
 		if($errors = $validator->errors()) {

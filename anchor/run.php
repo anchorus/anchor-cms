@@ -10,6 +10,9 @@ date_default_timezone_set(Config::app('timezone', 'UTC'));
  */
 switch(constant('ENV')) {
 	case 'dev':
+	case 'development':
+	case 'local':
+	case 'localhost':
 		ini_set('display_errors', true);
 		error_reporting(-1);
 		break;
@@ -34,12 +37,28 @@ require APP . 'helpers' . EXT;
 /**
  * Anchor setup
  */
-Anchor::setup();
+try {
+	Anchor::setup();
+} catch(Exception $e) {
+
+	if(ini_get('display_errors') != "1") {
+		echo "<h1>Something went wrong, please notify the owner of the site</h1>";
+	} else {
+		Error::exception($e);
+	}
+
+	Error::log($e);
+	die();
+}
+
 
 /**
  * Import defined routes
  */
 if(is_admin()) {
+	// Set posts per page for admin
+	Config::set('admin.posts_per_page', 6);
+
 	require APP . 'routes/admin' . EXT;
 	require APP . 'routes/categories' . EXT;
 	require APP . 'routes/comments' . EXT;
@@ -47,10 +66,12 @@ if(is_admin()) {
 	require APP . 'routes/menu' . EXT;
 	require APP . 'routes/metadata' . EXT;
 	require APP . 'routes/pages' . EXT;
+	require APP . 'routes/panel' . EXT;
 	require APP . 'routes/plugins' . EXT;
 	require APP . 'routes/posts' . EXT;
 	require APP . 'routes/users' . EXT;
 	require APP . 'routes/variables' . EXT;
+	require APP . 'routes/pagetypes' . EXT;
 }
 else {
 	require APP . 'routes/site' . EXT;

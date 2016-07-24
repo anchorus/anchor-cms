@@ -1,6 +1,6 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List Fields
@@ -8,7 +8,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::get(array('admin/extend/fields', 'admin/extend/fields/(:num)'), function($page = 1) {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
-		$vars['extend'] = Extend::paginate($page, Config::get('meta.posts_per_page'));
+		$vars['extend'] = Extend::paginate($page, Config::get('admin.posts_per_page'));
 
 		return View::create('extend/fields/index', $vars)
 			->partial('header', 'partials/header')
@@ -21,6 +21,11 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::get('admin/extend/fields/add', function() {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
+		$vars['types'] = Extend::$types;
+
+		$vars['fields'] = Extend::$field_types;
+
+		$vars['pagetypes'] = Query::table(Base::table('pagetypes'))->sort('key')->get();
 
 		return View::create('extend/fields/add', $vars)
 			->partial('header', 'partials/header')
@@ -28,16 +33,24 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	});
 
 	Route::post('admin/extend/fields/add', function() {
-		$input = Input::get(array('type', 'field', 'key', 'label', 'attributes'));
-
+		$input = Input::get(array('type', 'field', 'key', 'label', 'attributes', 'pagetype'));
+		
 		if(empty($input['key'])) {
 			$input['key'] = $input['label'];
 		}
-
+		
 		$input['key'] = slug($input['key'], '_');
-
+		
+		// an array of items that we shouldn't encode - they're no XSS threat
+		$dont_encode = array('attributes');
+		
+		foreach($input as $key => &$value) {
+			if(in_array($key, $dont_encode)) continue;
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
-
+		
 		$validator->add('valid_key', function($str) use($input) {
 			return Extend::where('key', '=', $str)
 				->where('type', '=', $input['type'])->count() == 0;
@@ -74,6 +87,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		Extend::create(array(
 			'type' => $input['type'],
+			'pagetype' => $input['pagetype'],
 			'field' => $input['field'],
 			'key' => $input['key'],
 			'label' => $input['label'],
@@ -91,6 +105,8 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::get('admin/extend/fields/edit/(:num)', function($id) {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
+		$vars['types'] = Extend::$types;
+		$vars['fields'] = Extend::$field_types;
 
 		$extend = Extend::find($id);
 
@@ -100,22 +116,28 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$vars['field'] = $extend;
 
+		$vars['pagetypes'] = Query::table(Base::table('pagetypes'))->sort('key')->get();
+
 		return View::create('extend/fields/edit', $vars)
 			->partial('header', 'partials/header')
 			->partial('footer', 'partials/footer');
 	});
 
 	Route::post('admin/extend/fields/edit/(:num)', function($id) {
-		$input = Input::get(array('type', 'field', 'key', 'label', 'attributes'));
-
+		$input = Input::get(array('type', 'field', 'key', 'label', 'attributes', 'pagetype'));
+		
 		if(empty($input['key'])) {
 			$input['key'] = $input['label'];
 		}
-
+		
 		$input['key'] = slug($input['key'], '_');
-
+		
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
-
+		
 		$validator->add('valid_key', function($str) use($id, $input) {
 			return Extend::where('key', '=', $str)
 				->where('type', '=', $input['type'])
@@ -134,7 +156,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 			Notify::error($errors);
 
-			return Response::redirect('admin/extend/fields/add');
+			return Response::redirect('admin/extend/fields/edit/' . $id);
 		}
 
 		if($input['field'] == 'image') {
@@ -153,6 +175,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		Extend::update($id, array(
 			'type' => $input['type'],
+			'pagetype' => $input['pagetype'],
 			'field' => $input['field'],
 			'key' => $input['key'],
 			'label' => $input['label'],

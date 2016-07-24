@@ -1,13 +1,13 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List users
 	*/
 	Route::get(array('admin/users', 'admin/users/(:num)'), function($page = 1) {
 		$vars['messages'] = Notify::read();
-		$vars['users'] = User::paginate($page, Config::get('meta.posts_per_page'));
+		$vars['users'] = User::paginate($page, Config::get('admin.posts_per_page'));
 
 		return View::create('users/index', $vars)
 			->partial('header', 'partials/header')
@@ -21,6 +21,9 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
 		$vars['user'] = User::find($id);
+
+		// extended fields
+		$vars['fields'] = Extend::fields('user', $id);
 
 		$vars['statuses'] = array(
 			'inactive' => __('global.inactive'),
@@ -41,14 +44,19 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::post('admin/users/edit/(:num)', function($id) {
 		$input = Input::get(array('username', 'email', 'real_name', 'bio', 'status', 'role'));
 		$password_reset = false;
-
+		
+		// A little higher to avoid messing with the password
+		foreach($input as $key => &$value) {
+			$value = eq($value);
+		}
+		
 		if($password = Input::get('password')) {
 			$input['password'] = $password;
 			$password_reset = true;
 		}
-
+		
 		$validator = new Validator($input);
-
+		
 		$validator->add('safe', function($str) use($id) {
 			return ($str != 'inactive' and Auth::user()->id == $id);
 		});
@@ -78,6 +86,8 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		User::update($id, $input);
 
+		Extend::process('user', $id);
+
 		Notify::success(__('users.updated'));
 
 		return Response::redirect('admin/users/edit/' . $id);
@@ -89,6 +99,9 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::get('admin/users/add', function() {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
+
+		// extended fields
+		$vars['fields'] = Extend::fields('user');
 
 		$vars['statuses'] = array(
 			'inactive' => __('global.inactive'),
@@ -108,11 +121,16 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 	Route::post('admin/users/add', function() {
 		$input = Input::get(array('username', 'email', 'real_name', 'password', 'bio', 'status', 'role'));
-
+		
+		foreach($input as $key => &$value) {
+			if($key === 'password') continue; // Can't avoid, so skip.
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->check('username')
-			->is_max(2, __('users.username_missing', 2));
+			->is_max(3, __('users.username_missing', 2));
 
 		$validator->check('email')
 			->is_email(__('users.email_missing'));
@@ -130,7 +148,9 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$input['password'] = Hash::make($input['password']);
 
-		User::create($input);
+		$user = User::create($input);
+
+		Extend::process('user', $user->id);
 
 		Notify::success(__('users.created'));
 
@@ -150,6 +170,8 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		}
 
 		User::where('id', '=', $id)->delete();
+
+		Query::table(Base::table('user_meta'))->where('user', '=', $id)->delete();
 
 		Notify::success(__('users.deleted'));
 

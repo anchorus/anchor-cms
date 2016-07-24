@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-gb">
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
 		<title>Установка Anchor CMS</title>
@@ -15,10 +15,10 @@
 
 			<ul>
 				<li class="start database metadata account complete">Язык и время</li>
-				<li class="database metadata account complete">Соединение с БД</li>
-				<li class="metadata account complete">Настройки сайта</li>
+				<li class="database metadata account complete">База данных</li>
+				<li class="metadata account complete">Настройка сайта</li>
 				<li class="account complete">Ваш профиль</li>
-				<li class="complete">Все готово!</li>
+				<li class="complete">Всё сделано!</li>
 			</ul>
 		</nav>
 

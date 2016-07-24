@@ -28,10 +28,10 @@ Route::post('start', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($i18n);
 
 	$validator->check('language')
-		->is_max(2, 'Выберите язык');
+		->is_max(2, 'Пожалуйста, выберете язык.');
 
 	$validator->check('timezone')
-		->is_max(2, 'Выберите часовой пояс');
+		->is_max(2, 'Пожалуйста, выбрете часовой пояс.');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -52,7 +52,7 @@ Route::post('start', array('before' => 'check', 'main' => function() {
 Route::get('database', array('before' => 'check', 'main' => function() {
 	// check we have a selected language
 	if( ! Session::get('install.i18n')) {
-		Notify::error('Выберите язык');
+		Notify::error('Пожалуйста, выберете язык.');
 
 		return Response::redirect('start');
 	}
@@ -88,6 +88,9 @@ Route::get('database', array('before' => 'check', 'main' => function() {
 Route::post('database', array('before' => 'check', 'main' => function() {
 	$database = Input::get(array('host', 'port', 'user', 'pass', 'name', 'collation', 'prefix'));
 
+	// Escape the password input
+	$database['pass'] = addslashes($database['pass']);
+
 	// test connection
 	try {
 		$connection = DB::factory(array(
@@ -120,7 +123,7 @@ Route::post('database', array('before' => 'check', 'main' => function() {
 Route::get('metadata', array('before' => 'check', 'main' => function() {
 	// check we have a database
 	if( ! Session::get('install.database')) {
-		Notify::error('Укажите данные для соединения с БД');
+		Notify::error('Пожалуйста, укажите параметры для соединения с базой данных.');
 
 		return Response::redirect('database');
 	}
@@ -128,6 +131,9 @@ Route::get('metadata', array('before' => 'check', 'main' => function() {
 	$vars['messages'] = Notify::read();
 	$vars['site_path'] = dirname(dirname($_SERVER['SCRIPT_NAME']));
 	$vars['themes'] = Themes::all();
+
+	//  Fix for Windows screwing up directories
+	$vars['site_path'] = str_replace('\\', '/', $vars['site_path']);
 
 	return Layout::create('metadata', $vars);
 }));
@@ -138,16 +144,16 @@ Route::post('metadata', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($metadata);
 
 	$validator->check('site_name')
-		->is_max(4, 'Придумайте название для блога');
+		->is_max(4, 'Пожалуйста, придумайте название сайта.');
 
 	$validator->check('site_description')
-		->is_max(4, 'Придумайте описание для блога');
+		->is_max(4, 'Пожалуйста, придумайте описание сайта.');
 
 	$validator->check('site_path')
-		->is_max(1, 'Введите патч для блога');
+		->is_max(1, 'Пожалуйста, укажите путь к сайту.');
 
 	$validator->check('theme')
-		->is_max(1, 'Выберите шаблон по-умолчанию');
+		->is_max(1, 'Пожалуйста, выберете шаблон сайта.');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -168,7 +174,7 @@ Route::post('metadata', array('before' => 'check', 'main' => function() {
 Route::get('account', array('before' => 'check', 'main' => function() {
 	// check we have a database
 	if( ! Session::get('install.metadata')) {
-		Notify::error('Укажите данные о вашем блоге');
+		Notify::error('Пожалуйста, укажите данные сайта.');
 
 		return Response::redirect('metadata');
 	}
@@ -184,13 +190,13 @@ Route::post('account', array('before' => 'check', 'main' => function() {
 	$validator = new Validator($account);
 
 	$validator->check('username')
-		->is_max(4, 'Придумайте логин');
+		->is_max(3, 'Пожалуйста, введите логин.');
 
 	$validator->check('email')
-		->is_email('Введите правильный email адрес');
+		->is_email('Пожалуйста, введите правильный E-mail адрес.');
 
 	$validator->check('password')
-		->is_max(6, 'Придумайте пароль, причем не короче 6 символов');
+		->is_max(6, 'Пожалуйста, придумайте пароль, содержащий не менее 6 символов.');
 
 	if($errors = $validator->errors()) {
 		Input::flash();
@@ -223,7 +229,7 @@ Route::post('account', array('before' => 'check', 'main' => function() {
 Route::get('complete', function() {
 	// check we have a database
 	if( ! Session::get('install')) {
-		Notify::error('Выберите язык');
+		Notify::error('Пожалуйста, выберете язык.');
 
 		return Response::redirect('start');
 	}

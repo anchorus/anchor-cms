@@ -33,9 +33,9 @@
 
 		<h1>404</h1>
 
-		<p>Страница <code><?php echo Uri::current(); ?></code> не найдена.</p>
+		<p>The page <code><?php echo htmlspecialchars(Uri::current()); ?></code> was not found.</p>
 
-		<p>Попробуйте вернуться <a href="/">на главную</a></p>
+		<p>Try the <a href="/">homepage</a></p>
 
 	</body>
 </html>

@@ -55,7 +55,11 @@ function dd() {
 function noise($size = 32) {
 	$pool = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
-	return substr(str_shuffle(str_repeat($pool, 3)), 0, $size);
+	$factory = new RandomLib\Factory;
+
+	$generator = $factory->getMediumStrengthGenerator();
+
+	return $generator->generateString($size, $pool);
 }
 
 /**
@@ -77,4 +81,11 @@ function normalize($str) {
  */
 function e($str, $quotes = ENT_NOQUOTES) {
 	return htmlspecialchars($str, $quotes, Config::app('encoding'), false);
+}
+
+/**
+ * Alias for e($str, ENT_QUOTES)
+ */
+function eq($str) {
+	return e($str, ENT_QUOTES);
 }

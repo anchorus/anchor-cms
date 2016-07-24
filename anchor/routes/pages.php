@@ -1,14 +1,14 @@
 <?php
 
-Route::collection(array('before' => 'auth,csrf'), function() {
+Route::collection(array('before' => 'auth,csrf,install_exists'), function() {
 
 	/*
 		List Pages
 	*/
 	Route::get(array('admin/pages', 'admin/pages/(:num)'), function($page = 1) {
-		$perpage = Config::meta('posts_per_page');
-		$total = Page::count();
-		$pages = Page::sort('title')->take($perpage)->skip(($page - 1) * $perpage)->get();
+		$perpage = Config::get('admin.posts_per_page');
+		$total = Page::where(Base::table('pages.parent'), '=', '0')->count();
+		$pages = Page::sort('title')->where(Base::table('pages.parent'), '=', '0')->take($perpage)->skip(($page - 1) * $perpage)->get();
 		$url = Uri::to('admin/pages');
 
 		$pagination = new Paginator($pages, $total, $page, $perpage, $url);
@@ -31,7 +31,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$query = Page::where('status', '=', $status);
 
-		$perpage = Config::meta('posts_per_page');
+		$perpage = Config::get('admin.posts_per_page');
 		$total = $query->count();
 		$pages = $query->sort('title')->take($perpage)->skip(($page - 1) * $perpage)->get();
 		$url = Uri::to('admin/pages/status');
@@ -53,8 +53,11 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	Route::get('admin/pages/edit/(:num)', function($id) {
 		$vars['messages'] = Notify::read();
 		$vars['token'] = Csrf::token();
+		$vars['deletable'] = (Page::count() > 1) && (Page::home()->id != $id) && (Page::posts()->id != $id);
 		$vars['page'] = Page::find($id);
 		$vars['pages'] = Page::dropdown(array('exclude' => array($id), 'show_empty_option' => true));
+
+		$vars['pagetypes'] = Query::table(Base::table('pagetypes'))->sort('key')->get();
 
 		$vars['statuses'] = array(
 			'published' => __('global.published'),
@@ -63,7 +66,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		);
 
 		// extended fields
-		$vars['fields'] = Extend::fields('page', $id);
+		$vars['fields'] = Extend::fields('page', $id, $vars['page']->pagetype);
 
 		return View::create('pages/edit', $vars)
 			->partial('header', 'partials/header')
@@ -72,7 +75,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	});
 
 	Route::post('admin/pages/edit/(:num)', function($id) {
-		$input = Input::get(array('parent', 'name', 'title', 'slug', 'content', 'status', 'redirect', 'show_in_menu'));
+		$input = Input::get(array('parent', 'name', 'title', 'slug', 'markdown', 'status', 'redirect', 'show_in_menu', 'pagetype'));
 
 		// if there is no slug try and create one from the title
 		if(empty($input['slug'])) {
@@ -81,10 +84,15 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
-
-		// encode title
-		$input['title'] = htmlspecialchars($input['title'], ENT_QUOTES, Config::app('encoding'), false);
-
+		
+		// an array of items that we shouldn't encode - they're no XSS threat
+		$dont_encode = array('markdown');
+		
+		foreach($input as $key => &$value) {
+			if(in_array($key, $dont_encode)) continue;
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->add('duplicate', function($str) use($id) {
@@ -121,6 +129,8 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$input['show_in_menu'] = is_null($input['show_in_menu']) ? 0 : 1;
 
+		$input['html'] = parse($input['markdown']);
+
 		Page::update($id, $input);
 
 		Extend::process('page', $id);
@@ -138,6 +148,8 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 		$vars['token'] = Csrf::token();
 		$vars['pages'] = Page::dropdown(array('exclude' => array(), 'show_empty_option' => true));
 
+		$vars['pagetypes'] = Query::table(Base::table('pagetypes'))->sort('key')->get();
+
 		$vars['statuses'] = array(
 			'published' => __('global.published'),
 			'draft' => __('global.draft'),
@@ -154,8 +166,7 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 	});
 
 	Route::post('admin/pages/add', function() {
-		$input = Input::get(array('parent', 'name', 'title', 'slug', 'content',
-			'status', 'redirect', 'show_in_menu'));
+		$input = Input::get(array('parent', 'name', 'title', 'slug', 'markdown', 'status', 'redirect', 'show_in_menu', 'pagetype'));
 
 		// if there is no slug try and create one from the title
 		if(empty($input['slug'])) {
@@ -164,10 +175,15 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		// convert to ascii
 		$input['slug'] = slug($input['slug']);
-
-		// encode title
-		$input['title'] = e($input['title'], ENT_COMPAT);
-
+		
+		// an array of items that we shouldn't encode - they're no XSS threat
+		$dont_encode = array('markdown');
+		
+		foreach($input as $key => &$value) {
+			if(in_array($key, $dont_encode)) continue;
+			$value = eq($value);
+		}
+		
 		$validator = new Validator($input);
 
 		$validator->add('duplicate', function($str) {
@@ -201,26 +217,29 @@ Route::collection(array('before' => 'auth,csrf'), function() {
 
 		$input['show_in_menu'] = is_null($input['show_in_menu']) ? 0 : 1;
 
+		$input['html'] = parse($input['markdown']);
+
 		$page = Page::create($input);
 
 		Extend::process('page', $page->id);
 
 		Notify::success(__('pages.created'));
-
-		return Response::redirect('admin/pages');
+		
+		return Response::redirect('admin/pages/edit/' . $page->id);
 	});
 
 	/*
 		Delete Page
 	*/
 	Route::get('admin/pages/delete/(:num)', function($id) {
-		Page::find($id)->delete();
-
-		Query::table(Base::table('page_meta'))->where('page', '=', $id)->delete();
-
-		Notify::success(__('pages.deleted'));
+		if(Page::count() > 1) {
+			Page::find($id)->delete();
+			Query::table(Base::table('page_meta'))->where('page', '=', $id)->delete();
+			Notify::success(__('pages.deleted'));
+		} else {
+			Notify::error('Unable to delete page, you must have at least 1 page.');
+		}
 
 		return Response::redirect('admin/pages');
 	});
-
 });

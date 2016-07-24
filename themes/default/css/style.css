@@ -183,22 +183,30 @@ h1 {
 		.pagination a:hover {
 			color: #3c4857;
 		}
-	.pagination a.next {
+	.pagination .next {
 		float: right;
 	}
 
 /**
  *   Give some extra space to single-page wrappers
  */
-.content.wrap {
+.content {
 	padding-bottom: 50px;
 }
-	.content.wrap ul, .content.wrap ol, .items li ul {
+	.content  ul, .content ol {
 		padding: 20px 30px;
 	}
-		.content.wrap ul ul, .content.wrap ol ol, .items li ul ul {
+	.content ul.items {
+		padding: 0;
+	}
+		.content ul ul, .content ol ol, .items li ul ul {
 			padding: 0 20px;
 		}
+	.content blockquote {
+		border-left: 3px solid #98a2b1;
+		padding-left: 15px;
+		margin: 15px 0;
+	}
 
 /**
  *   Footnotes and straplines

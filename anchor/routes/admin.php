@@ -8,7 +8,7 @@ Route::action('auth', function() {
 });
 
 Route::action('guest', function() {
-	if(Auth::user()) return Response::redirect('admin/posts');
+	if(Auth::user()) return Response::redirect('admin/post');
 });
 
 Route::action('csrf', function() {
@@ -21,25 +21,33 @@ Route::action('csrf', function() {
 	}
 });
 
+Route::action('install_exists', function() {
+	if(file_exists('install') && !Session::get('messages.error'))
+		Notify::error(array('Пожалуйста, удалите директорию install прежде, чем публиковать записи на сайт.'));
+});
+
 /**
  * Admin routing
  */
 Route::get('admin', function() {
 	if(Auth::guest()) return Response::redirect('admin/login');
-	return Response::redirect('admin/posts');
+	return Response::redirect('admin/panel');
 });
 
 /*
 	Log in
 */
-Route::get('admin/login', function() {
+// Why check if we haven't deleted the install directory, BEFORE we've logged in? Isn't that just unlocking the door for the burglars to enter?
+//Route::get('admin/login', array('before' => 'install_exists', 'main' => function() {
+Route::get('admin/login', array('before' => 'guest', 'main' => function() {
+	if(!Auth::guest()) return Response::redirect('admin/posts');
 	$vars['messages'] = Notify::read();
 	$vars['token'] = Csrf::token();
 
 	return View::create('users/login', $vars)
 		->partial('header', 'partials/header')
 		->partial('footer', 'partials/footer');
-});
+}));
 
 Route::post('admin/login', array('before' => 'csrf', 'main' => function() {
 	$attempt = Auth::attempt(Input::get('user'), Input::get('pass'));
@@ -57,7 +65,7 @@ Route::post('admin/login', array('before' => 'csrf', 'main' => function() {
 		return Response::redirect('admin/upgrade');
 	}
 
-	return Response::redirect('admin/posts');
+	return Response::redirect('admin/panel');
 }));
 
 /*
@@ -201,6 +209,34 @@ Route::get('admin/extend', array('before' => 'auth', 'main' => function($page = 
 	return View::create('extend/index', $vars)
 		->partial('header', 'partials/header')
 		->partial('footer', 'partials/footer');
+}));
+
+Route::post('admin/get_fields', array('before' => 'auth', 'main' => function() {
+	$input = Input::get(array('id', 'pagetype'));
+
+	// get the extended fields
+	$vars['fields'] = Extend::fields('page', -1, $input['pagetype']);
+
+	$html = View::create('pages/fields', $vars)->render();
+	$token = '<input name="token" type="hidden" value="' . Csrf::token() . '">';
+
+	return Response::json(array(
+		'token' => $token,
+		'html' => $html
+	));
+}));
+
+/*
+	Upload an image
+*/
+Route::post('admin/upload', array('before' => 'auth', 'main' => function() {
+	$uploader = new Uploader(PATH . 'content', array('png', 'jpg', 'bmp', 'gif', 'pdf'));
+	$filepath = $uploader->upload($_FILES['file']);
+
+	$uri = Config::app('url', '/') . 'content/' . basename($filepath);
+	$output = array('uri' => $uri);
+
+	return Response::json($output);
 }));
 
 /*

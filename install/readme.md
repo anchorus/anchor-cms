@@ -1,3 +1,3 @@
-## Установка Anchor CMS
+## Installing Anchor CMS
 
-[Документация на нашем сайте!](http://anchorcms.ru/docs/getting-started/installing).
+[It's on our site!](http://anchorcms.com/docs/getting-started/installing).

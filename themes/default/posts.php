@@ -12,7 +12,7 @@
 					</h1>
 
 					<div class="content">
-						<?php echo article_markdown(); ?>
+						<?php echo article_html(); ?>
 					</div>
 
 					<footer>
@@ -35,16 +35,20 @@
 		<?php if(has_pagination()): ?>
 		<nav class="pagination">
 			<div class="wrap">
-				<?php echo posts_prev(); ?>
-				<?php echo posts_next(); ?>
+				<div class="previous">
+					<?php echo posts_prev(); ?>
+				</div>
+				<div class="next">
+					<?php echo posts_next(); ?>
+				</div>
 			</div>
 		</nav>
 		<?php endif; ?>
 
 	<?php else: ?>
 		<div class="wrap">
-			<h1>Записей нет!</h1>
-			<p>Похоже нужно что-нибудь написать!</p>
+			<h1>Записей ещё нет!</h1>
+			<p>Похоже, вам есть что написать в блог!</p>
 		</div>
 	<?php endif; ?>
 
